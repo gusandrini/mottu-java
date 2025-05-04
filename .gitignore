@@ -1,0 +1,35 @@
+*.class
+*.jar
+*.war
+*.ear
+
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+/.classpath
+/.project
+/.settings/
+/bin/
+/.apt_generated/
+/.factorypath
+
+.idea/
+/*.iml
+/out/
+
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Spring Boot
+.spring-boot-devtools.properties
+
+application.properties
+application.yml
