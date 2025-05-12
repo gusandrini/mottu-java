@@ -1,5 +1,7 @@
 package br.com.fiap.model;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +17,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "cliente")
-public class Cliente {
+public class Cliente extends RepresentationModel<Cliente>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_cliente;
