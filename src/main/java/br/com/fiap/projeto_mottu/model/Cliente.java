@@ -1,4 +1,4 @@
-package br.com.fiap.model;
+package br.com.fiap.projeto_mottu.model;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -21,10 +21,12 @@ public class Cliente extends RepresentationModel<Cliente>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_cliente;
+	
 	@OneToOne
     @JoinColumn(name = "id_logradouro", nullable = false)
     @NotNull(message = "O cliente deve estar relacionado a um logradouro")
 	private Logradouro logradouro;
+	
 	@NotEmpty(message = "O nome do cliente deve ser informado!")
     @Size(max = 100, message = "O nome do cliente deve ter no máximo 100 caracteres")
 	private String nm_cliente;
@@ -56,7 +58,7 @@ public class Cliente extends RepresentationModel<Cliente>{
 	public void setId_cliente(Long id_cliente) {
 		this.id_cliente = id_cliente;
 	}
-
+	
 	public Logradouro getLogradouro() {
 		return logradouro;
 	}
@@ -64,7 +66,7 @@ public class Cliente extends RepresentationModel<Cliente>{
 	public void setLogradouro(Logradouro logradouro) {
 		this.logradouro = logradouro;
 	}
-
+	
 	public String getNm_cliente() {
 		return nm_cliente;
 	}

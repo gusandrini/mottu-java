@@ -1,11 +1,11 @@
-package br.com.fiap.repository;
+package br.com.fiap.projeto_mottu.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import br.com.fiap.model.Cliente;
+import br.com.fiap.projeto_mottu.model.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 

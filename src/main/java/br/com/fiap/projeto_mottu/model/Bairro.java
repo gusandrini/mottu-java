@@ -1,4 +1,4 @@
-package br.com.fiap.model;
+package br.com.fiap.projeto_mottu.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

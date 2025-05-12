@@ -1,9 +1,9 @@
-package br.com.fiap.dto;
+package br.com.fiap.projeto_mottu.dto;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import br.com.fiap.model.Cliente;
-import br.com.fiap.model.Logradouro;
+import br.com.fiap.projeto_mottu.model.Cliente;
+import br.com.fiap.projeto_mottu.model.Logradouro;
 
 public class ClienteDTO extends RepresentationModel<ClienteDTO>{
 	private Long id_cliente;
@@ -38,7 +38,7 @@ public class ClienteDTO extends RepresentationModel<ClienteDTO>{
 	public void setId_cliente(Long id_cliente) {
 		this.id_cliente = id_cliente;
 	}
-
+	
 	public Logradouro getLogradouro() {
 		return logradouro;
 	}
@@ -46,7 +46,7 @@ public class ClienteDTO extends RepresentationModel<ClienteDTO>{
 	public void setLogradouro(Logradouro logradouro) {
 		this.logradouro = logradouro;
 	}
-
+	
 	public String getNm_cliente() {
 		return nm_cliente;
 	}

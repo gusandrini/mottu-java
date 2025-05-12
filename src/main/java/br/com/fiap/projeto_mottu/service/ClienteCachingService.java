@@ -1,4 +1,4 @@
-package br.com.fiap.service;
+package br.com.fiap.projeto_mottu.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,8 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import br.com.fiap.model.Cliente;
-import br.com.fiap.repository.ClienteRepository;
+import br.com.fiap.projeto_mottu.model.Cliente;
+import br.com.fiap.projeto_mottu.repository.ClienteRepository;
 
 @Service
 public class ClienteCachingService {
