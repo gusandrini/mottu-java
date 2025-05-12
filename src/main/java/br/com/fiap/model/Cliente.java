@@ -28,8 +28,6 @@ public class Cliente {
 	private String nm_cliente;
 	@Pattern(regexp = "\\d{11}", message = "CPF deve conter exatamente 11 dígitos numéricos")
 	private String nr_cpf;
-	@Pattern(regexp = "\\(?\\d{2}\\)?\\s?\\d{4,5}-\\d{4}", message = "Telefone deve estar no formato (XX) XXXXX-XXXX")
-	private String nr_telefone;
 	@Email(message = "Email deve ser válido")
     @Size(max = 100, message = "Email deve ter no máximo 100 caracteres")
 	private String nm_email;
@@ -40,14 +38,12 @@ public class Cliente {
 			@NotNull(message = "O cliente deve estar relacionado a um logradouro") Logradouro logradouro,
 			@NotEmpty(message = "O nome do cliente deve ser informado!") @Size(max = 100, message = "O nome do cliente deve ter no máximo 100 caracteres") String nm_cliente,
 			@Pattern(regexp = "\\d{11}", message = "CPF deve conter exatamente 11 dígitos numéricos") String nr_cpf,
-			@Pattern(regexp = "\\(?\\d{2}\\)?\\s?\\d{4,5}-\\d{4}", message = "Telefone deve estar no formato (XX) XXXXX-XXXX") String nr_telefone,
 			@Email(message = "Email deve ser válido") @Size(max = 100, message = "Email deve ter no máximo 100 caracteres") String nm_email) {
 		super();
 		this.id_cliente = id_cliente;
 		this.logradouro = logradouro;
 		this.nm_cliente = nm_cliente;
 		this.nr_cpf = nr_cpf;
-		this.nr_telefone = nr_telefone;
 		this.nm_email = nm_email;
 	}
 
@@ -81,14 +77,6 @@ public class Cliente {
 
 	public void setNr_cpf(String nr_cpf) {
 		this.nr_cpf = nr_cpf;
-	}
-
-	public String getNr_telefone() {
-		return nr_telefone;
-	}
-
-	public void setNr_telefone(String nr_telefone) {
-		this.nr_telefone = nr_telefone;
 	}
 
 	public String getNm_email() {
