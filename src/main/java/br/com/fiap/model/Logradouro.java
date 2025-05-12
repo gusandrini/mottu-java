@@ -21,11 +21,12 @@ public class Logradouro {
     @JoinColumn(name = "id_bairro", nullable = false)
     @NotNull(message = "O logradouro deve estar vinculado a um bairro")
 	private Bairro bairro;
-	@NotEmpty(message = "A rua deve ser informada")
-    @Size(max = 100, message = "A rua deve ter no máximo 100 caracteres")
-	private String rua;
-	@NotNull(message = "Número do endereço deve ser informado")
-	private Integer numero;
+	@NotEmpty(message = "O nome do logradouro deve ser informado")
+    @Size(max = 100, message = "O logradouro deve ter no máximo 100 caracteres")
+	private String nm_logradouro;
+	@NotEmpty(message = "O número do logradouro deve ser informado")
+    @Size(max = 10, message = "O número do logradouro deve ter no máximo 10 caracteres")
+	private Integer nr_logradouro;
 	@Size(max = 100, message = "O complemento deve ter no máximo 100 caracteres")
 	private String complemento;
 	
@@ -35,14 +36,14 @@ public class Logradouro {
 
 	public Logradouro(Long id_logradouro,
 			@NotNull(message = "O logradouro deve estar vinculado a um bairro") Bairro bairro,
-			@NotEmpty(message = "A rua deve ser informada") @Size(max = 100, message = "A rua deve ter no máximo 100 caracteres") String rua,
-			@NotNull(message = "Número do endereço deve ser informado") Integer numero,
+			@NotEmpty(message = "O nome do logradouro deve ser informado") @Size(max = 100, message = "O logradouro deve ter no máximo 100 caracteres") String nm_logradouro,
+			@NotEmpty(message = "O número do logradouro deve ser informado") @Size(max = 10, message = "O número do logradouro deve ter no máximo 10 caracteres") Integer nr_logradouro,
 			@Size(max = 100, message = "O complemento deve ter no máximo 100 caracteres") String complemento) {
 		super();
 		this.id_logradouro = id_logradouro;
 		this.bairro = bairro;
-		this.rua = rua;
-		this.numero = numero;
+		this.nm_logradouro = nm_logradouro;
+		this.nr_logradouro = nr_logradouro;
 		this.complemento = complemento;
 	}
 
@@ -67,23 +68,23 @@ public class Logradouro {
 	}
 
 
-	public String getRua() {
-		return rua;
+	public String getNm_logradouro() {
+		return nm_logradouro;
 	}
 
 
-	public void setRua(String rua) {
-		this.rua = rua;
+	public void setNm_logradouro(String nm_logradouro) {
+		this.nm_logradouro = nm_logradouro;
 	}
 
 
-	public Integer getNumero() {
-		return numero;
+	public Integer getNr_logradouro() {
+		return nr_logradouro;
 	}
 
 
-	public void setNumero(Integer numero) {
-		this.numero = numero;
+	public void setNr_logradouro(Integer nr_logradouro) {
+		this.nr_logradouro = nr_logradouro;
 	}
 
 
@@ -95,6 +96,7 @@ public class Logradouro {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
+
 	
 	
 }
