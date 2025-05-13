@@ -32,11 +32,10 @@ public class Logradouro {
 	
 	public Logradouro() {}
 
-
 	public Logradouro(Long id_logradouro,
 			@NotNull(message = "O logradouro deve estar vinculado a um bairro") Bairro bairro,
 			@NotEmpty(message = "O nome do logradouro deve ser informado") @Size(max = 100, message = "O logradouro deve ter no máximo 100 caracteres") String nm_logradouro,
-			@NotEmpty(message = "O número do logradouro deve ser informado") @Size(max = 10, message = "O número do logradouro deve ter no máximo 10 caracteres") Integer nr_logradouro,
+			@NotNull(message = "O número do logradouro deve ser informado") Integer nr_logradouro,
 			@Size(max = 100, message = "O complemento deve ter no máximo 100 caracteres") String complemento) {
 		super();
 		this.id_logradouro = id_logradouro;
