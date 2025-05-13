@@ -25,7 +25,6 @@ public class Logradouro {
     @Size(max = 100, message = "O logradouro deve ter no máximo 100 caracteres")
 	private String nm_logradouro;
 	@NotEmpty(message = "O número do logradouro deve ser informado")
-    @Size(max = 10, message = "O número do logradouro deve ter no máximo 10 caracteres")
 	private Integer nr_logradouro;
 	@Size(max = 100, message = "O complemento deve ter no máximo 100 caracteres")
 	private String complemento;
