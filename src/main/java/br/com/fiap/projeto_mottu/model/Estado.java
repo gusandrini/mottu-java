@@ -12,7 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "cidade")
+@Table(name = "estado")
 public class Estado {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
