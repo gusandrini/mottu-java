@@ -30,9 +30,6 @@ public class BairroController {
 	@Autowired
 	private BairroCachingService cacheB;
 	
-	@Autowired
-	private BairroService servB;
-	
 	@GetMapping(value = "/todos")
 	public List<Bairro> retornaTodosBairros(){
 		return repB.findAll();
