@@ -39,7 +39,7 @@ public class ClienteController {
 	private ClienteCachingService cacheC;
 	
 	@GetMapping(value = "/todos")
-	public List<Cliente> retornaTodosIntegrantes(){
+	public List<Cliente> retornaTodosClientes(){
 		return repC.findAll();
 	}
 	
