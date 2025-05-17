@@ -11,10 +11,10 @@
     </parent>
 
     <groupId>br.com.fiap</groupId>
-    <artifactId>projeto-musica</artifactId>
+    <artifactId>projeto-mottu</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>projeto-musica</name>
-    <description>Gerenciando entidades referentes à músicas, artistas e integrantes</description>
+    <name>projeto-mottu</name>
+    <description>Gerenciando entidades referentes à motos, funcionários, clientes, filiais, etc</description>
 
     <properties>
         <java.version>17</java.version>
