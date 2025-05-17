@@ -13,9 +13,11 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 @Entity
 @Table(name = "manutencao")
+@Data
 public class Manutencao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
