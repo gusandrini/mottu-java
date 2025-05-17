@@ -1,5 +1,6 @@
 package br.com.fiap.projeto_mottu.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,10 +27,19 @@ public class Funcionario {
 	private Filial filial;
 	@NotEmpty(message = "O nome do funcionário deve ser informado")
     @Size(max = 100, message = "O nome deve ter no máximo 100 caracteres")
+	@Column(name = "nm_funcionario")
 	private String nm_funcionario;
+	@NotEmpty
 	@Email(message = "O e-mail deve ser válido")
     @Size(max = 100, message = "O e-mail deve ter no máximo 100 caracteres")
+	@Column(name = "nm_email_corporativo")
 	private String nm_email_corporativo;
+	@NotEmpty
 	@Size(max = 225, message = "A senha deve ter no máximo 225 caracteres")
+	@Column(name = "nm_senha")
 	private String nm_senha;
+	@NotEmpty
+	@Column(name = "nm_cargo")
+	@Size(max = 50, message = "O nome do cargo deve ter no máximo 50 caracteres")
+	private String nm_cargo;
 }

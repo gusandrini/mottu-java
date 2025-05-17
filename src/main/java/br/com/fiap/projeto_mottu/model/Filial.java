@@ -1,5 +1,6 @@
 package br.com.fiap.projeto_mottu.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +24,7 @@ public class Filial{
 	private Long id_filial;
 	@NotEmpty(message = "Não é possível inserir uma filial sem nome")
 	@Size(min = 0, max = 100, message = "Valor de nome inválido")
+	@Column(name = "nm_filial")
 	private String nome_filial;
 	@OneToOne
     @JoinColumn(name = "id_logradouro", nullable = false)

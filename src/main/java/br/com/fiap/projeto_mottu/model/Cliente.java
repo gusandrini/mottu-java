@@ -2,6 +2,7 @@ package br.com.fiap.projeto_mottu.model;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,11 +32,16 @@ public class Cliente extends RepresentationModel<Cliente>{
 	
 	@NotEmpty(message = "O nome do cliente deve ser informado!")
     @Size(max = 100, message = "O nome do cliente deve ter no máximo 100 caracteres")
+	@Column(name = "nm_cliente")
 	private String nm_cliente;
+	@NotEmpty
 	@Pattern(regexp = "\\d{11}", message = "CPF deve conter exatamente 11 dígitos numéricos")
+	@Column(name = "nr_cpf")
 	private String nr_cpf;
+	@NotEmpty
 	@Email(message = "Email deve ser válido")
     @Size(max = 100, message = "Email deve ter no máximo 100 caracteres")
+	@Column(name = "nm_email")
 	private String nm_email;
 	
 }

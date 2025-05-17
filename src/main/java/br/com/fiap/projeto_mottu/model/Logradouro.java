@@ -1,5 +1,6 @@
 package br.com.fiap.projeto_mottu.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,10 +26,13 @@ public class Logradouro {
 	private Bairro bairro;
 	@NotEmpty(message = "O nome do logradouro deve ser informado")
     @Size(max = 100, message = "O logradouro deve ter no máximo 100 caracteres")
+	@Column(name = "nm_logradouro")
 	private String nm_logradouro;
 	@NotNull(message = "O número do logradouro deve ser informado")
+	@Column(name = "nr_logradouro")
 	private Integer nr_logradouro;
 	@Size(max = 100, message = "O complemento deve ter no máximo 100 caracteres")
+	@Column(name = "nm_complemento")
 	private String complemento;
 	
 }

@@ -1,5 +1,6 @@
 package br.com.fiap.projeto_mottu.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +26,7 @@ public class Estado {
 	private Pais pais;
 	@NotEmpty(message = "O nome do estado deve ser informado")
     @Size(min = 2, max = 2, message = "O estado deve conter exatamente 2 letras (UF)")
+	@Column(name = "nm_estado")
 	private String nm_estado;
 	
 }

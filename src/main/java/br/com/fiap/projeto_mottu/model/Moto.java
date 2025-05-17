@@ -2,6 +2,7 @@ package br.com.fiap.projeto_mottu.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -32,15 +33,16 @@ public class Moto{
 	private String nm_placa;
     @NotEmpty(message = "Não é possível inserir uma moto sem seu modelo (Sport, E ou Pop)")
     @Enumerated(EnumType.STRING)
+    @Column(name = "nm_modelo")
 	private ModeloEnum nm_modelo;
-    @Size(max = 20, message = "O status deve ter no máximo 20 caracteres")
-	private String ds_status;
     @ManyToOne
-    @JoinColumn(name = "id_filial", nullable = false)
-    @NotNull(message = "A moto deve estar vinculada a uma filial")
-	private Filial filial;
+    @JoinColumn(name = "id_filial_departamento", nullable = false)
+    @NotNull(message = "A moto deve estar vinculada a uma filial departamento")
+	private FilialDepartamento filial_departamento;
     @NotEmpty(message = "Não é possível inserir uma moto sem sua situação/condição (Manutenção, Funcionamento ou Pátio)")
     @Enumerated(EnumType.STRING)
 	private SituacaoEnum st_moto;
+    @Column(name = "km_rodado")
+    private Double km_rodado;
 	
 }

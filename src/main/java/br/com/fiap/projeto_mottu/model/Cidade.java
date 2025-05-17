@@ -1,5 +1,6 @@
 package br.com.fiap.projeto_mottu.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +26,7 @@ public class Cidade {
 	private Estado estado;
 	@NotEmpty(message = "O nome da cidade deve ser informado")
     @Size(max = 50, message = "O nome da cidade deve ter no máximo 50 caracteres")
+	@Column(name = "nm_cidade")
 	private String nm_cidade;
 
 }

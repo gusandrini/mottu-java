@@ -2,6 +2,7 @@ package br.com.fiap.projeto_mottu.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,12 +27,16 @@ public class Manutencao {
 	@JoinColumn(name = "id_moto", nullable = false)
     @NotNull(message = "A manutenção tem que estar vinculada a uma moto!")
 	private Moto moto;
+	@NotEmpty
 	@PastOrPresent(message = "Data inválida")
+	@Column(name = "dt_entrada")
 	private LocalDate dt_entrada;
 	@PastOrPresent(message = "Data inválida")
+	@Column(name = "dt_saida")
 	private LocalDate dt_saida;
 	@NotEmpty(message = "A descrição da manutenção da moto deve ser informada!")
     @Size(max = 300, message = "A descrição da manutenção deve ter no máximo 300 caracteres")
+	@Column(name = "ds_manutencao")
 	private String ds_manutencao;
 	
 }

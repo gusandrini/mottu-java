@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -24,13 +24,13 @@ public class Telefone {
     @JoinColumn(name = "id_cliente", nullable = false)
     @NotNull(message = "O telefone deve estar vinculado a um cliente")
 	private Cliente cliente;
-	@NotBlank(message = "O número de telefone não pode estar em branco")
+	@NotEmpty(message = "O número de telefone não pode estar em branco")
     @Size(max = 15, message = "O número de telefone deve ter no máximo 15 caracteres")
 	private String nr_telefone;
-	@NotBlank(message = "O DDI não pode estar em branco")
+	@NotEmpty(message = "O DDI não pode estar em branco")
     @Size(max = 4, message = "O DDI deve ter no máximo 4 caracteres")
 	private String nr_ddi;
-	@NotBlank(message = "O DDD não pode estar em branco")
+	@NotEmpty(message = "O DDD não pode estar em branco")
     @Size(max = 5, message = "O DDD deve ter no máximo 5 caracteres")
 	private String nr_ddd;
 	
