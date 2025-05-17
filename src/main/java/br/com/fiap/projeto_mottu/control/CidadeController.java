@@ -29,7 +29,7 @@ public class CidadeController {
 	@Autowired
 	private CidadeCachingService cacheCid;
 	
-	@GetMapping(value = "/todos")
+	@GetMapping(value = "/todas")
 	public List<Cidade> retornaTodasCidades(){
 		return repCid.findAll();
 	}
