@@ -10,9 +10,11 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 @Entity
 @Table(name = "bairro")
+@Data
 public class Bairro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,40 +26,5 @@ public class Bairro {
 	@NotEmpty(message = "O nome do bairro deve ser informado")
     @Size(max = 100, message = "O nome do bairro deve ter no máximo 100 caracteres")
 	private String nm_bairro;
-	
-	public Bairro() {}
-
-	public Bairro(Long id_bairro, @NotNull(message = "O bairro deve estar vinculado a uma cidade") Cidade cidade,
-			@NotEmpty(message = "O nome do bairro deve ser informado") @Size(max = 100, message = "O nome do bairro deve ter no máximo 100 caracteres") String nm_bairro) {
-		super();
-		this.id_bairro = id_bairro;
-		this.cidade = cidade;
-		this.nm_bairro = nm_bairro;
-	}
-
-	public Long getId_bairro() {
-		return id_bairro;
-	}
-
-	public void setId_bairro(Long id_bairro) {
-		this.id_bairro = id_bairro;
-	}
-
-	public Cidade getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(Cidade cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getNm_bairro() {
-		return nm_bairro;
-	}
-
-	public void setNm_bairro(String nm_bairro) {
-		this.nm_bairro = nm_bairro;
-	}
-	
 	
 }
