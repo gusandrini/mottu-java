@@ -25,7 +25,6 @@ import br.com.fiap.projeto_mottu.repository.FilialRepository;
 import br.com.fiap.projeto_mottu.service.FilialCachingService;
 import br.com.fiap.projeto_mottu.service.FilialService;
 
-
 @RestController
 @RequestMapping(value = "/filial")
 public class FilialController {
