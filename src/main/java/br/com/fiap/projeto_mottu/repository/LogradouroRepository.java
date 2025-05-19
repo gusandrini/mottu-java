@@ -9,6 +9,7 @@ import br.com.fiap.projeto_mottu.model.Logradouro;
 
 public interface LogradouroRepository extends JpaRepository<Logradouro, Long>{
 	
+	//Busca logradouro por nome
 	@Query("SELECT l FROM Logradouro l WHERE LOWER(l.nm_logradouro) LIKE LOWER(CONCAT('%', :nome, '%'))")
     List<Logradouro> buscarPorNome(String nome);
 }
