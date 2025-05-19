@@ -82,22 +82,20 @@ public class MotoController {
 		return moto;
 	}
 	
-	@GetMapping("/por-situacao")
-    public ResponseEntity<List<MotoProjection>> buscarPorSituacao(@RequestParam String situacao) {
-        List<MotoProjection> motos = repM.buscarPorSituacao(situacao);
-        return motos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(motos);
+	@GetMapping("/situacao")
+    public List<Moto> buscarPorSituacaoOrdenado(@RequestParam String situacao) {
+        return repM.buscarPorSituacaoOrdenadoPorModelo(situacao);
     }
 	
-	@GetMapping("/por-placa")
-    public ResponseEntity<Moto> buscarPorPlaca(@RequestParam String placa) {
-        Optional<Moto> moto = repM.buscarPorPlaca(placa);
-        return moto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
+	 @GetMapping("/placa")
+	    public ResponseEntity<Moto> buscarPorPlaca(@RequestParam String placa) {
+	        Optional<Moto> moto = repM.buscarPorPlaca(placa);
+	        return moto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+	 }
 	
-	@GetMapping("/por-nome-filial")
-    public ResponseEntity<List<MotoProjection>> buscarPorNomeDaFilial(@RequestParam String nomeFilial) {
-        List<MotoProjection> motos = repM.buscarMotosPorNomeDaFilial(nomeFilial);
-        return motos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(motos);
+	@GetMapping("/filial")
+    public List<MotoProjection> buscarPorNomeDaFilialOrdenado(@RequestParam String nomeFilial) {
+        return repM.buscarMotosPorNomeDaFilialOrdenadoPorModelo(nomeFilial);
     }
 	
 	@PutMapping(value = "/atualizar/{id_moto}")
