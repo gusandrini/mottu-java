@@ -9,7 +9,7 @@ import br.com.fiap.projeto_mottu.model.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 
-	//Busca cliente e ordena por nome
+	//Busca cliente por substring (nome, cpf ou email) e ordena por nome do cliente
 	@Query(nativeQuery = true, value = """
 	        select * from cliente c 
 	        where c.nm_cliente like concat('%', :sub_cliente, '%')
