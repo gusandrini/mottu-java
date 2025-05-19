@@ -82,10 +82,9 @@ public class ClienteController {
 	}
 	
 	@GetMapping(value = "/substring")
-	public List<Cliente> 
-	buscarClientePorSubstringList(@RequestParam(value = "sub_cliente") String sub_cliente){
-		return repC.buscarClientePorSubstring(sub_cliente);
-	}
+	public List<Cliente> buscarClientePorSubstring(@RequestParam String filtro) {
+        return repC.buscarClientePorSubstringOrdenadoPorNome(filtro);
+    }
 	
 	@PutMapping(value = "/atualizar/{id_cliente}")
 	public Cliente atualizarCliente(@RequestBody Cliente cliente, @PathVariable Long id_cliente) {
