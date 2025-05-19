@@ -14,8 +14,5 @@ public interface BairroRepository extends JpaRepository<Bairro, Long>{
     @Query("select b.nm_bairro as nm_bairro, b.cidade.nm_cidade as cidadeNome from Bairro b where b.cidade.id_cidade = :idCidade")
     List<BairroProjection> findByCidade(Long idCidade);
 
-	// Busca só nome do bairro + nome da cidade
-    @Query("select b.nm_bairro as nm_bairro, b.cidade.nm_cidade as cidadeNome from Bairro b")
-    List<BairroProjection> listarBairrosComNomeDeCidade();
 }
 
