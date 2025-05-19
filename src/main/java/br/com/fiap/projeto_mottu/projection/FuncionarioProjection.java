@@ -5,4 +5,5 @@ public interface FuncionarioProjection {
 	String getNmFuncionario();
     String getNmCargo();
     String getNmEmailCorporativo();
+    String getFilialNomeFilial();
 }
