@@ -12,7 +12,7 @@ import br.com.fiap.projeto_mottu.model.Manutencao;
 public interface ManutencaoRepository extends JpaRepository<Manutencao, Long>{
 
 	//Busca todas as manutenções e ordena pela data de entrada das motos
-	@Query("SELECT m FROM Manutencao m ORDER BY m.dtEntrada DESC")
+	@Query("SELECT m FROM Manutencao m ORDER BY m.dt_entrada DESC")
 	List<Manutencao> buscarTodasOrdenadasPorDataEntrada();
 	
 	//Busca manutenções por data de entrada
