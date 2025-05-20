@@ -34,6 +34,4 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long>{
 		""")
 		List<FuncionarioProjection> buscarFuncionariosPorCargoOrdenado(@Param("cargo") String cargo);
     
-    // Busca funcionário por email corporativo
-    Funcionario findByNmEmailCorporativo(String nmEmailCorporativo);
 }

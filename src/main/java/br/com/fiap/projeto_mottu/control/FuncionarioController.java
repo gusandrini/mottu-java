@@ -135,9 +135,4 @@ public class FuncionarioController {
         return repFunc.buscarFuncionariosPorCargoOrdenado(cargo);
     }
 	
-	 @GetMapping("/buscar_por_email")
-	    public ResponseEntity<Funcionario> buscarPorEmail(@RequestParam String email) {
-	        Funcionario funcionario = repFunc.findByNmEmailCorporativo(email);
-	        return funcionario != null ? ResponseEntity.ok(funcionario) : ResponseEntity.notFound().build();
-	 }
 }
