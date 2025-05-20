@@ -98,11 +98,10 @@ public class MotoController {
 	 }
 	
 	@GetMapping("/buscar_por_filial_ordenado")
-	public ResponseEntity<List<MotoProjection>> buscarMotosPorFilial(
-            @RequestParam("nomeFilial") String nomeFilial) {
-        List<MotoProjection> resultado = repM.buscarMotosPorNomeDaFilialOrdenadoPorModelo(nomeFilial);
-        return ResponseEntity.ok(resultado);
-    }
+	public ResponseEntity<List<MotoProjection>> buscarMotosPorFilial(@RequestParam("nomeFilial") String nomeFilial) {
+	    List<MotoProjection> resultado = repM.buscarMotosPorNomeDaFilialOrdenadoPorModelo(nomeFilial);
+	    return ResponseEntity.ok(resultado);
+	}
 	
 	@PutMapping(value = "/atualizar/{id_moto}")
 	public Moto atualizarMoto(@RequestBody Moto moto, @PathVariable Long id_moto) {
