@@ -13,12 +13,12 @@ import br.com.fiap.projeto_mottu.model.Filial;
 public class FilialService {
 
 	@Autowired
-	private FilialCachingService cacheC;
+	private FilialCachingService cacheF;
 	
 	@Transactional(readOnly = true)
 	public Page<FilialDTO> paginar(PageRequest req){
 		
-		Page<Filial> paginas_filiais = cacheC.findAll(req);
+		Page<Filial> paginas_filiais = cacheF.findAll(req);
 		Page<FilialDTO> paginas_filiais_dto = 
 				paginas_filiais.map(filial -> new FilialDTO(filial));
 		return paginas_filiais_dto;
