@@ -10,7 +10,7 @@ import br.com.fiap.projeto_mottu.projection.DepartamentoProjection;
 
 public interface DepartamentoRepository extends JpaRepository<Departamento, Long>{
 
-	@Query("SELECT d.nmDepartamento AS nmDepartamento, d.descDepartamento AS descDepartamento "
-	         + "FROM Departamento d WHERE d.nmDepartamento = :nmDepartamento ORDER BY d.nmDepartamento DESC")
+	@Query("SELECT d.nm_departamento AS nmDepartamento, d.desc_departamento AS descDepartamento "
+	         + "FROM Departamento d WHERE d.nm_departamento = :nmDepartamento ORDER BY d.desc_departamento DESC")
 	    List<DepartamentoProjection> buscarDepartamentoPorNome(String nmDepartamento);
 }
