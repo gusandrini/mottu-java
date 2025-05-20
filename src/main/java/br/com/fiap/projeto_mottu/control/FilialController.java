@@ -80,9 +80,9 @@ public class FilialController {
 		return filial;
 	}
 	
-	@GetMapping("/buscar-por-nome")
-	public ResponseEntity<List<Filial>> buscarPorNome(@RequestParam String nomeFilial) {
-	    List<Filial> filiais = repF.findByNomeFilialContainingIgnoreCase(nomeFilial);
+	@GetMapping("/busca_por_nome_filial")
+	public ResponseEntity<List<Filial>> buscarPorNome(@RequestParam String nm_filial) {
+	    List<Filial> filiais = repF.findByNomeFilialContainingIgnoreCase(nm_filial);
 	    return filiais.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(filiais);
 	}
 	
