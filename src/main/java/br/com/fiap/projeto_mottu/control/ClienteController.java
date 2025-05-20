@@ -81,7 +81,7 @@ public class ClienteController {
 		return cliente;
 	}
 	
-	@GetMapping(value = "/substring")
+	@GetMapping(value = "/buscar_por_substring")
 	public List<Cliente> buscarClientePorSubstring(@RequestParam String filtro) {
         return repC.buscarClientePorSubstringOrdenadoPorNome(filtro);
     }
