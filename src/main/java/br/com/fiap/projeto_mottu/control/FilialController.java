@@ -81,10 +81,9 @@ public class FilialController {
 	}
 	
 	@GetMapping("/busca_por_nome_filial")
-	public ResponseEntity<List<Filial>> buscarPorNome(@RequestParam String nm_filial) {
-	    List<Filial> filiais = repF.findByNomeFilialContainingIgnoreCase(nm_filial);
-	    return filiais.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(filiais);
-	}
+	public List<Filial> buscarPorNome(@RequestParam String nomeFilial) {
+        return repF.buscarPorNome(nomeFilial);
+    }
 	
 	@PutMapping(value = "/atualizar/{id_filial}")
 	public Filial atualizarFilial(@RequestBody Filial filial, @PathVariable Long id_filial) {
