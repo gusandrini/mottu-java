@@ -27,7 +27,7 @@ public class Manutencao {
 	@JoinColumn(name = "id_moto", nullable = false)
     @NotNull(message = "A manutenção tem que estar vinculada a uma moto!")
 	private Moto moto;
-	@NotEmpty
+	@NotNull
 	@PastOrPresent(message = "Data inválida")
 	@Column(name = "dt_entrada")
 	private LocalDate dt_entrada;
