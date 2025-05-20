@@ -81,8 +81,8 @@ public class FilialController {
 	}
 	
 	@GetMapping("/busca_por_nome_filial")
-	public List<Filial> buscarPorNome(@RequestParam String nomeFilial) {
-        return repF.buscarPorNome(nomeFilial);
+	public List<Filial> buscarPorNome(@RequestParam String nm_filial) {
+        return repF.buscarPorNome(nm_filial);
     }
 	
 	@PutMapping(value = "/atualizar/{id_filial}")
