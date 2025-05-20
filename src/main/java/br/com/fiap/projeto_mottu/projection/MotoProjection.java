@@ -5,6 +5,5 @@ public interface MotoProjection {
 	String getNmPlaca();
     String getNmModelo(); 
     String getStMoto();   
-    String getClienteNome(); 
-    String getFilialDepartamentoNome();
+    
 }
