@@ -89,13 +89,6 @@ public class ManutencaoController {
         return repMan.buscarTodasOrdenadasPorDataEntrada();
     }
 	
-	@GetMapping("/buscar_por_data")
-    public ResponseEntity<List<Manutencao>> buscarPorDataEntrada(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
-        List<Manutencao> manutencoes = repMan.findByDtEntrada(data);
-        return manutencoes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(manutencoes);
-    }
-	
 	@GetMapping("/buscar_em_aberto")
     public ResponseEntity<List<Manutencao>> buscarManutencoesEmAberto() {
         List<Manutencao> manutencoes = repMan.buscarManutencoesEmAberto();
