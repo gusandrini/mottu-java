@@ -22,16 +22,17 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long>{
 		""")
 		List<FuncionarioProjection> buscarFuncionariosPorNomeFilial(@Param("nomeFilial") String nomeFilial);
 
-    // Busca todos os funcionários com determinado cargo
-    @Query("""
-    	    SELECT 
-    	        f.nm_funcionario AS nmFuncionario,
-    	        f.nm_email_corporativo AS nmEmailCorporativo,
-    	        f.filial.nome_filial AS filialNomeFilial
-    	    FROM Funcionario f
-    	    WHERE f.nm_cargo = :cargo
-    	""")
-    	List<FuncionarioProjection> buscarFuncionariosPorCargo(@Param("cargo") String cargo);
+    // Busca todos os funcionários com determinado cargo e ordena pelo nome dos funcionários
+	@Query("""
+		    SELECT 
+		        f.nm_funcionario AS nmFuncionario,
+		        f.nm_email_corporativo AS nmEmailCorporativo,
+		        f.filial.nome_filial AS filialNomeFilial
+		    FROM Funcionario f
+		    WHERE f.nm_cargo = :cargo
+		    ORDER BY f.nm_funcionario ASC
+		""")
+		List<FuncionarioProjection> buscarFuncionariosPorCargoOrdenado(@Param("cargo") String cargo);
     
     // Busca funcionário por email corporativo
     Funcionario findByNmEmailCorporativo(String nmEmailCorporativo);
