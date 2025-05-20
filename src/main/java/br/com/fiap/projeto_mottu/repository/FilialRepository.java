@@ -10,6 +10,6 @@ import br.com.fiap.projeto_mottu.model.Filial;
 
 public interface FilialRepository extends JpaRepository<Filial, Long>{
 
-	@Query("SELECT f FROM Filial f WHERE LOWER(f.nm_filial) LIKE LOWER(CONCAT('%', :nm_filial, '%'))")
-    List<Filial> buscarPorNome(@Param("nm_filial") String nm_filial);
+	@Query("SELECT f FROM Filial f WHERE LOWER(f.nome_filial) LIKE LOWER(CONCAT('%', :nomeFilial, '%'))")
+    List<Filial> buscarPorNome(@Param("nomeFilial") String nomeFilial);
 }

@@ -81,13 +81,13 @@ public class FilialController {
 	}
 	
 	@GetMapping("/busca_por_nome_filial")
-	public ResponseEntity<List<Filial>> buscarPorNome(@RequestParam String nm_filial) {
-		List<Filial> filiais = repF.buscarPorNome(nm_filial); 
-        if (filiais.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(filiais);
-    }
+	public ResponseEntity<List<Filial>> buscarPorNome(@RequestParam String nomeFilial) {
+	    List<Filial> filiais = repF.buscarPorNome(nomeFilial);
+	    if (filiais.isEmpty()) {
+	        return ResponseEntity.noContent().build();
+	    }
+	    return ResponseEntity.ok(filiais);
+	}
 	
 	@PutMapping(value = "/atualizar/{id_filial}")
 	public Filial atualizarFilial(@RequestBody Filial filial, @PathVariable Long id_filial) {
