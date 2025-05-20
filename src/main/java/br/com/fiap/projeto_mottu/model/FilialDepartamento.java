@@ -32,7 +32,7 @@ public class FilialDepartamento {
 	private Departamento departamento;
 	@PastOrPresent
 	@Column(name = "dt_entrada")
-	@NotEmpty
+	@NotNull
 	private LocalDate dt_entrada;
 	@PastOrPresent
 	@Column(name = "dt_saida")
