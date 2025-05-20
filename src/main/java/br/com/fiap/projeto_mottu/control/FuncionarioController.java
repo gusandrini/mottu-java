@@ -125,8 +125,8 @@ public class FuncionarioController {
 	}
 	
 	@GetMapping("/buscar_por_filial")
-    public ResponseEntity<List<FuncionarioProjection>> buscarPorFilial(@RequestParam String nm_filial) {
-        List<FuncionarioProjection> funcionarios = repFunc.buscarFuncionariosPorNomeFilial(nm_filial);
+    public ResponseEntity<List<FuncionarioProjection>> buscarPorFilial(@RequestParam String nomeFilial) {
+        List<FuncionarioProjection> funcionarios = repFunc.buscarFuncionariosPorNomeFilial(nomeFilial);
         return funcionarios.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(funcionarios);
     }
 	
