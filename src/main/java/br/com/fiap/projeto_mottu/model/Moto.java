@@ -31,7 +31,7 @@ public class Moto{
 	private Cliente cliente;
     @Size(max = 10, message = "Valor da placa inválido")
 	private String nm_placa;
-    @NotEmpty(message = "Não é possível inserir uma moto sem seu modelo (Sport, E ou Pop)")
+    @NotNull(message = "Não é possível inserir uma moto sem seu modelo (Sport, E ou Pop)")
     @Enumerated(EnumType.STRING)
     @Column(name = "nm_modelo")
 	private ModeloEnum nm_modelo;
@@ -39,7 +39,7 @@ public class Moto{
     @JoinColumn(name = "id_filial_departamento", nullable = false)
     @NotNull(message = "A moto deve estar vinculada a uma filial departamento")
 	private FilialDepartamento filial_departamento;
-    @NotEmpty(message = "Não é possível inserir uma moto sem sua situação/condição (Manutenção, Funcionamento ou Pátio)")
+    @NotNull(message = "Não é possível inserir uma moto sem sua situação/condição (Manutenção, Funcionamento ou Pátio)")
     @Enumerated(EnumType.STRING)
 	private SituacaoEnum st_moto;
     @Column(name = "km_rodado")
