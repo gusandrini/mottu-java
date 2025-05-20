@@ -22,13 +22,14 @@ public class Filial{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_filial;
-	@NotEmpty(message = "Não é possível inserir uma filial sem nome")
-	@Size(min = 0, max = 100, message = "Valor de nome inválido")
-	@Column(name = "nm_filial")
-	private String nome_filial;
 	@OneToOne
     @JoinColumn(name = "id_logradouro", nullable = false)
     @NotNull(message = "A filial deve estar vinculada a um logradouro")
 	private Logradouro logradouro;
+	@NotEmpty(message = "Não é possível inserir uma filial sem nome")
+	@Size(min = 0, max = 100, message = "Valor de nome inválido")
+	@Column(name = "nm_filial")
+	private String nome_filial;
+	
 	
 }
