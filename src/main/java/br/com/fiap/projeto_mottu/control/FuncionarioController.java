@@ -124,19 +124,18 @@ public class FuncionarioController {
 
 	}
 	
-	@GetMapping("/por-filial")
+	@GetMapping("/filial")
     public ResponseEntity<List<FuncionarioProjection>> buscarPorFilial(@RequestParam String nomeFilial) {
         List<FuncionarioProjection> funcionarios = repFunc.buscarFuncionariosPorNomeFilial(nomeFilial);
         return funcionarios.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(funcionarios);
     }
 	
-	@GetMapping("/por-cargo")
-    public ResponseEntity<List<FuncionarioProjection>> buscarPorCargo(@RequestParam String cargo) {
-        List<FuncionarioProjection> funcionarios = repFunc.buscarFuncionariosPorCargo(cargo);
-        return funcionarios.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(funcionarios);
+	@GetMapping("/cargo")
+    public List<FuncionarioProjection> buscarPorCargo(@RequestParam String cargo) {
+        return repFunc.buscarFuncionariosPorCargoOrdenado(cargo);
     }
 	
-	 @GetMapping("/por-email")
+	 @GetMapping("/email")
 	    public ResponseEntity<Funcionario> buscarPorEmail(@RequestParam String email) {
 	        Funcionario funcionario = repFunc.findByNmEmailCorporativo(email);
 	        return funcionario != null ? ResponseEntity.ok(funcionario) : ResponseEntity.notFound().build();
