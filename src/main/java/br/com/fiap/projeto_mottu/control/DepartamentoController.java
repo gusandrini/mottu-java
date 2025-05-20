@@ -39,7 +39,7 @@ public class DepartamentoController {
     @Autowired
     private DepartamentoService servD;
     
-    @GetMapping
+    @GetMapping(value = "/todos")
     public List<Departamento> listarTodos() {
         return cacheD.findAll();
     }
