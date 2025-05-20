@@ -13,25 +13,25 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long>{
 
 	// Busca todos os funcionários de uma filial pelo nome da filial
 	@Query("""
-		    SELECT 
-		        f.nm_funcionario AS nmFuncionario,
-		        f.nm_cargo AS nmCargo,
-		        f.nm_email_corporativo AS nmEmailCorporativo
-		    FROM Funcionario f
-		    WHERE f.filial.nome_filial = :nomeFilial
-		""")
-		List<FuncionarioProjection> buscarFuncionariosPorNomeFilial(@Param("nomeFilial") String nomeFilial);
+	        SELECT 
+	            f.nm_funcionario AS nmFuncionario,
+	            f.nm_cargo AS nmCargo,
+	            f.nm_email_corporativo AS nmEmailCorporativo
+	        FROM Funcionario f
+	        WHERE LOWER(f.filial.nome_filial) LIKE LOWER(CONCAT('%', :nomeFilial, '%'))
+	""")
+	List<FuncionarioProjection> buscarFuncionariosPorNomeFilial(@Param("nomeFilial") String nomeFilial);
 
     // Busca todos os funcionários com determinado cargo e ordena pelo nome dos funcionários
 	@Query("""
-		    SELECT 
-		        f.nm_funcionario AS nmFuncionario,
-		        f.nm_email_corporativo AS nmEmailCorporativo,
-		        f.filial.nome_filial AS filialNomeFilial
-		    FROM Funcionario f
-		    WHERE f.nm_cargo = :cargo
-		    ORDER BY f.nm_funcionario ASC
-		""")
-		List<FuncionarioProjection> buscarFuncionariosPorCargoOrdenado(@Param("cargo") String cargo);
+	        SELECT 
+	            f.nm_funcionario AS nmFuncionario,
+	            f.nm_email_corporativo AS nmEmailCorporativo,
+	            f.filial.nome_filial AS filialNomeFilial
+	        FROM Funcionario f
+	        WHERE LOWER(f.nm_cargo) LIKE LOWER(CONCAT('%', :cargo, '%'))
+	        ORDER BY f.nm_funcionario ASC
+	""")
+	List<FuncionarioProjection> buscarFuncionariosPorCargoOrdenado(@Param("cargo") String cargo);
     
 }
