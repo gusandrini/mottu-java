@@ -82,18 +82,18 @@ public class MotoController {
 		return moto;
 	}
 	
-	@GetMapping("/situacao")
+	@GetMapping("/buscar_por_situacao")
     public List<Moto> buscarPorSituacaoOrdenado(@RequestParam String situacao) {
         return repM.buscarPorSituacaoOrdenadoPorModelo(situacao);
     }
 	
-	 @GetMapping("/placa")
+	 @GetMapping("/buscar_por_placa")
 	    public ResponseEntity<Moto> buscarPorPlaca(@RequestParam String placa) {
 	        Optional<Moto> moto = repM.buscarPorPlaca(placa);
 	        return moto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	 }
 	
-	@GetMapping("/filial")
+	@GetMapping("/buscar_por_filial_ordenado")
     public List<MotoProjection> buscarPorNomeDaFilialOrdenado(@RequestParam String nomeFilial) {
         return repM.buscarMotosPorNomeDaFilialOrdenadoPorModelo(nomeFilial);
     }
