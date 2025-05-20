@@ -18,13 +18,14 @@ public interface MotoRepository extends JpaRepository<Moto, Long>{
 	List<Moto> buscarPorSituacaoOrdenadoPorModelo(@Param("situacao") SituacaoEnum situacao);
 
     // Busca moto por placa
-    @Query("SELECT m FROM Moto m WHERE m.nm_placa = :placa")
-    Optional<Moto> buscarPorPlaca(String placa);
+	@Query("SELECT m FROM Moto m WHERE LOWER(m.nm_placa) LIKE LOWER(CONCAT('%', :placa, '%'))")
+	Optional<Moto> buscarPorPlaca(@Param("placa") String placa);
 
     //Busca moto por nome da filial, ordenada por modelo
-    @Query("SELECT m.nm_placa AS nmPlaca, m.nm_modelo AS nmModelo, m.st_moto AS stMoto " +
-            "FROM Moto m " +
-            "WHERE m.filial_departamento.filial.nome_filial = :nomeFilial " +
-            "ORDER BY m.nm_modelo")
-     List<MotoProjection> buscarMotosPorNomeDaFilialOrdenadoPorModelo(@Param("nomeFilial") String nomeFilial);
+	@Query("SELECT m.nm_placa AS nmPlaca, m.nm_modelo AS nmModelo, m.st_moto AS stMoto " +
+		       "FROM Moto m " +
+		       "WHERE LOWER(m.filial_departamento.filial.nome_filial) LIKE LOWER(CONCAT('%', :nomeFilial, '%')) " +
+		       "ORDER BY m.nm_modelo")
+	List<MotoProjection> buscarMotosPorNomeDaFilialOrdenadoPorModelo(@Param("nomeFilial") String nomeFilial);
+
 }
