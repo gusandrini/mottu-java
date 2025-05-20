@@ -49,9 +49,9 @@ public class DepartamentoController {
 		return cacheD.findAll();
 	}
     
-    @GetMapping("/nome")
-    public List<DepartamentoProjection> buscarPorNome(@RequestParam String nmDepartamento) {
-        return repD.buscarDepartamentoPorNome(nmDepartamento);
+    @GetMapping("/buscar_por_nome_departamento")
+    public List<DepartamentoProjection> buscarPorNome(@RequestParam String nm_departamento) {
+        return repD.buscarDepartamentoPorNome(nm_departamento);
     }
     
     @GetMapping(value = "/paginados")
