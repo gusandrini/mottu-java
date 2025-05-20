@@ -1,6 +1,5 @@
 package br.com.fiap.projeto_mottu.repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,9 +14,6 @@ public interface ManutencaoRepository extends JpaRepository<Manutencao, Long>{
 	@Query("SELECT m FROM Manutencao m ORDER BY m.dt_entrada DESC")
 	List<Manutencao> buscarTodasOrdenadasPorDataEntrada();
 	
-	//Busca manutenções por data de entrada
-    List<Manutencao> findByDtEntrada(LocalDate dtEntrada);
-    
     //Busca manutenções que ainda não foram concluídas (sem data de saída)
     @Query("SELECT m FROM Manutencao m WHERE m.dt_saida IS NULL")
     List<Manutencao> buscarManutencoesEmAberto();
