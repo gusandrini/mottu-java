@@ -21,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.fiap.projeto_mottu.dto.MotoDTO;
 import br.com.fiap.projeto_mottu.model.Moto;
+import br.com.fiap.projeto_mottu.model.SituacaoEnum;
 import br.com.fiap.projeto_mottu.projection.MotoProjection;
 import br.com.fiap.projeto_mottu.repository.MotoRepository;
 import br.com.fiap.projeto_mottu.service.MotoCachingService;
@@ -83,19 +84,24 @@ public class MotoController {
 	}
 	
 	@GetMapping("/buscar_por_situacao")
-    public List<Moto> buscarPorSituacaoOrdenado(@RequestParam String situacao) {
-        return repM.buscarPorSituacaoOrdenadoPorModelo(situacao);
+	public ResponseEntity<List<Moto>> buscarPorSituacaoOrdenadoPorModelo(
+            @RequestParam("situacao") SituacaoEnum situacao) {
+        List<Moto> motos = repM.buscarPorSituacaoOrdenadoPorModelo(situacao);
+        return ResponseEntity.ok(motos);
     }
 	
 	 @GetMapping("/buscar_por_placa")
-	    public ResponseEntity<Moto> buscarPorPlaca(@RequestParam String placa) {
+	 public ResponseEntity<Moto> buscarPorPlaca(@RequestParam("placa") String placa) {
 	        Optional<Moto> moto = repM.buscarPorPlaca(placa);
-	        return moto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+	        return moto.map(ResponseEntity::ok)
+	                .orElse(ResponseEntity.notFound().build());
 	 }
 	
 	@GetMapping("/buscar_por_filial_ordenado")
-    public List<MotoProjection> buscarPorNomeDaFilialOrdenado(@RequestParam String nomeFilial) {
-        return repM.buscarMotosPorNomeDaFilialOrdenadoPorModelo(nomeFilial);
+	public ResponseEntity<List<MotoProjection>> buscarMotosPorFilial(
+            @RequestParam("nomeFilial") String nomeFilial) {
+        List<MotoProjection> resultado = repM.buscarMotosPorNomeDaFilialOrdenadoPorModelo(nomeFilial);
+        return ResponseEntity.ok(resultado);
     }
 	
 	@PutMapping(value = "/atualizar/{id_moto}")
