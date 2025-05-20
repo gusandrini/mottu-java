@@ -12,5 +12,5 @@ public interface DepartamentoRepository extends JpaRepository<Departamento, Long
 
 	@Query("SELECT d.nm_departamento AS nmDepartamento, d.desc_departamento AS descDepartamento "
 	         + "FROM Departamento d WHERE d.nm_departamento = :nmDepartamento ORDER BY d.desc_departamento DESC")
-	    List<DepartamentoProjection> buscarDepartamentoPorNome(String nm_departamento);
+	    List<DepartamentoProjection> buscarDepartamentoPorNome(String nmDepartamento);
 }

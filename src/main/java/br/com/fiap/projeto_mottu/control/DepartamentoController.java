@@ -50,8 +50,8 @@ public class DepartamentoController {
 	}
     
     @GetMapping("/buscar_por_nome_departamento")
-    public List<DepartamentoProjection> buscarPorNome(@RequestParam String nm_departamento) {
-        return repD.buscarDepartamentoPorNome(nm_departamento);
+    public List<DepartamentoProjection> buscarPorNome(@RequestParam String nmDepartamento) {
+        return repD.buscarDepartamentoPorNome(nmDepartamento);
     }
     
     @GetMapping(value = "/paginados")
