@@ -20,4 +20,5 @@ Thumbs.db
 # Spring Boot
 .spring-boot-devtools.properties
 
+data/*.db
 
