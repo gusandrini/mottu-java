@@ -94,6 +94,43 @@ mvn spring-boot:run
 ```
 ---
 
+## 📘 Documentação da API
+
+Acesse a documentação da API gerada automaticamente com o Swagger:
+
+🔗 [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
+---
+
+## Acessando o banco de dados H2
+
+### 1️. Inicie o projeto normalmente
+
+```bash
+mvn spring-boot:run
+```
+
+### 2️. Acesse a inteface H2
+
+Abra o navegador e vá até:
+
+🔗 http://localhost:8080/h2-console
+
+-> Configure ele conforme o application.properties
+
+---
+
+### 💡 Dica: Resetar o banco de dados
+
+Como o projeto utiliza o banco H2 em memória, os dados são reiniciados a cada vez que o projeto é reiniciado. Você pode configurar persistência no arquivo application.properties se desejar manter dados entre sessões.
+
+Ao invés disso:
+spring.jpa.hibernate.ddl-auto=create
+Troque por isso:
+spring.jpa.hibernate.ddl-auto=update
+
+---
+
 ## 📌 Rotas da API
 
 ### Bairro
@@ -253,11 +290,4 @@ mvn spring-boot:run
 
 ---
 
-## 📘 Documentação da API
-
-Acesse a documentação da API gerada automaticamente com o Swagger:
-
-🔗 [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-
----
 <p align="center"> <em>Desenvolvido por alunos do 2º ano de ADS - FIAP | 2025</em> </p> ```
