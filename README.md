@@ -124,9 +124,12 @@ Abra o navegador e vá até:
 
 Como o projeto utiliza o banco H2 em memória, os dados são reiniciados a cada vez que o projeto é reiniciado. Você pode configurar persistência no arquivo application.properties se desejar manter dados entre sessões.
 
-Ao invés disso:
+- Ao invés disso:
+  
 spring.jpa.hibernate.ddl-auto=create
-Troque por isso:
+
+- Troque por isso:
+  
 spring.jpa.hibernate.ddl-auto=update
 
 ---
