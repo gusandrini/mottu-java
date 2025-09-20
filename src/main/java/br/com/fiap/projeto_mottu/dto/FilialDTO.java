@@ -5,32 +5,33 @@ import org.springframework.hateoas.RepresentationModel;
 import br.com.fiap.projeto_mottu.model.Filial;
 import br.com.fiap.projeto_mottu.model.Logradouro;
 
-public class FilialDTO extends RepresentationModel<FilialDTO>{
-	private Long id_filial;
+public class FilialDTO extends RepresentationModel<FilialDTO> {
+
+	private Long idFilial;
 	private Logradouro logradouro;
-	private String nome_filial;
-	
-	public FilialDTO () {}
+	private String nomeFilial;
 
-	public FilialDTO(Long id_filial, Logradouro logradouro, String nome_filial) {
-		super();
-		this.id_filial = id_filial;
+	public FilialDTO() {}
+
+	public FilialDTO(Long idFilial, Logradouro logradouro, String nomeFilial) {
+		this.idFilial = idFilial;
 		this.logradouro = logradouro;
-		this.nome_filial = nome_filial;
-	}
-	
-	public FilialDTO (Filial filial) {
-		setId_filial(filial.getId_filial());
-		setLogradouro(filial.getLogradouro());
-		setNome_filial(filial.getNome_filial());
+		this.nomeFilial = nomeFilial;
 	}
 
-	public Long getId_filial() {
-		return id_filial;
+	public FilialDTO(Filial filial) {
+		this.idFilial = filial.getIdFilial();
+		this.logradouro = filial.getLogradouro();
+		this.nomeFilial = filial.getNomeFilial();
 	}
 
-	public void setId_filial(Long id_filial) {
-		this.id_filial = id_filial;
+	// Getters e Setters manuais
+	public Long getIdFilial() {
+		return idFilial;
+	}
+
+	public void setIdFilial(Long idFilial) {
+		this.idFilial = idFilial;
 	}
 
 	public Logradouro getLogradouro() {
@@ -41,14 +42,11 @@ public class FilialDTO extends RepresentationModel<FilialDTO>{
 		this.logradouro = logradouro;
 	}
 
-	public String getNome_filial() {
-		return nome_filial;
+	public String getNomeFilial() {
+		return nomeFilial;
 	}
 
-	public void setNome_filial(String nome_filial) {
-		this.nome_filial = nome_filial;
+	public void setNomeFilial(String nomeFilial) {
+		this.nomeFilial = nomeFilial;
 	}
-	
-	
-	
 }

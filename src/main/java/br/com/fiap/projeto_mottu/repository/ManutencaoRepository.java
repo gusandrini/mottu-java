@@ -8,17 +8,18 @@ import org.springframework.data.repository.query.Param;
 
 import br.com.fiap.projeto_mottu.model.Manutencao;
 
-public interface ManutencaoRepository extends JpaRepository<Manutencao, Long>{
+public interface ManutencaoRepository extends JpaRepository<Manutencao, Long> {
 
-	//Busca todas as manutenções e ordena pela data de entrada das motos
-	@Query("SELECT m FROM Manutencao m ORDER BY m.dt_entrada DESC")
-	List<Manutencao> buscarTodasOrdenadasPorDataEntrada();
-	
-    //Busca manutenções que ainda não foram concluídas (sem data de saída)
-    @Query("SELECT m FROM Manutencao m WHERE m.dt_saida IS NULL")
+    // Todas as manutenções ordenadas por data de entrada (mais recente primeiro)
+    @Query("SELECT m FROM Manutencao m ORDER BY m.dtEntrada DESC")
+    List<Manutencao> buscarTodasOrdenadasPorDataEntrada();
+
+    // Em aberto = sem data de saída
+    @Query("SELECT m FROM Manutencao m WHERE m.dtSaida IS NULL")
     List<Manutencao> buscarManutencoesEmAberto();
-    
-    //Busca manutenções com descrição contendo uma palavra-chave
-    @Query("SELECT m FROM Manutencao m WHERE LOWER(m.ds_manutencao) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+
+    // Busca por palavra-chave na descrição (case-insensitive)
+    @Query("SELECT m FROM Manutencao m " +
+            "WHERE LOWER(m.dsManutencao) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Manutencao> buscarPorDescricao(@Param("keyword") String keyword);
 }

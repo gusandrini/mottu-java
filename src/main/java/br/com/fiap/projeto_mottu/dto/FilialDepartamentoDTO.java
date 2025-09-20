@@ -8,39 +8,40 @@ import br.com.fiap.projeto_mottu.model.Departamento;
 import br.com.fiap.projeto_mottu.model.Filial;
 import br.com.fiap.projeto_mottu.model.FilialDepartamento;
 
-public class FilialDepartamentoDTO extends RepresentationModel<FilialDepartamentoDTO>{
-	private Long id_filial_departamento;
+public class FilialDepartamentoDTO extends RepresentationModel<FilialDepartamentoDTO> {
+
+	private Long idFilialDepartamento;
 	private Filial filial;
 	private Departamento departamento;
-	private LocalDate dt_entrada;
-	private LocalDate dt_saida;
-	
-	public FilialDepartamentoDTO () {}
+	private LocalDate dtEntrada;
+	private LocalDate dtSaida;
 
-	public FilialDepartamentoDTO(Long id_filial_departamento, Filial filial, Departamento departamento,
-			LocalDate dt_entrada, LocalDate dt_saida) {
-		super();
-		this.id_filial_departamento = id_filial_departamento;
+	public FilialDepartamentoDTO() {}
+
+	public FilialDepartamentoDTO(Long idFilialDepartamento, Filial filial, Departamento departamento,
+								 LocalDate dtEntrada, LocalDate dtSaida) {
+		this.idFilialDepartamento = idFilialDepartamento;
 		this.filial = filial;
 		this.departamento = departamento;
-		this.dt_entrada = dt_entrada;
-		this.dt_saida = dt_saida;
-	}
-	
-	public FilialDepartamentoDTO (FilialDepartamento filialDepartamento) {
-		setId_filial_departamento(filialDepartamento.getId_filial_departamento());
-		setFilial(filialDepartamento.getFilial());
-		setDepartamento(filialDepartamento.getDepartamento());
-		setDt_entrada(filialDepartamento.getDt_entrada());
-		setDt_saida(filialDepartamento.getDt_saida());
+		this.dtEntrada = dtEntrada;
+		this.dtSaida = dtSaida;
 	}
 
-	public Long getId_filial_departamento() {
-		return id_filial_departamento;
+	public FilialDepartamentoDTO(FilialDepartamento filialDepartamento) {
+		this.idFilialDepartamento = filialDepartamento.getIdFilialDepartamento();
+		this.filial = filialDepartamento.getFilial();
+		this.departamento = filialDepartamento.getDepartamento();
+		this.dtEntrada = filialDepartamento.getDtEntrada();
+		this.dtSaida = filialDepartamento.getDtSaida();
 	}
 
-	public void setId_filial_departamento(Long id_filial_departamento) {
-		this.id_filial_departamento = id_filial_departamento;
+	// Getters e Setters manuais
+	public Long getIdFilialDepartamento() {
+		return idFilialDepartamento;
+	}
+
+	public void setIdFilialDepartamento(Long idFilialDepartamento) {
+		this.idFilialDepartamento = idFilialDepartamento;
 	}
 
 	public Filial getFilial() {
@@ -59,21 +60,19 @@ public class FilialDepartamentoDTO extends RepresentationModel<FilialDepartament
 		this.departamento = departamento;
 	}
 
-	public LocalDate getDt_entrada() {
-		return dt_entrada;
+	public LocalDate getDtEntrada() {
+		return dtEntrada;
 	}
 
-	public void setDt_entrada(LocalDate dt_entrada) {
-		this.dt_entrada = dt_entrada;
+	public void setDtEntrada(LocalDate dtEntrada) {
+		this.dtEntrada = dtEntrada;
 	}
 
-	public LocalDate getDt_saida() {
-		return dt_saida;
+	public LocalDate getDtSaida() {
+		return dtSaida;
 	}
 
-	public void setDt_saida(LocalDate dt_saida) {
-		this.dt_saida = dt_saida;
+	public void setDtSaida(LocalDate dtSaida) {
+		this.dtSaida = dtSaida;
 	}
-	
-	
 }

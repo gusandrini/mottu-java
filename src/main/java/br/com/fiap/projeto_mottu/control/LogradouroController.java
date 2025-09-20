@@ -23,81 +23,70 @@ import br.com.fiap.projeto_mottu.service.LogradouroService;
 @RestController
 @RequestMapping(value = "/logradouros")
 public class LogradouroController {
-	
+
 	@Autowired
 	private LogradouroRepository repL;
-	
+
 	@Autowired
 	private LogradouroService servL;
-	
+
 	@Autowired
 	private LogradouroCachingService cacheL;
-	
+
 	@GetMapping(value = "/todos")
-	public List<Logradouro> retornaTodosLogradouros(){
+	public List<Logradouro> retornaTodosLogradouros() {
 		return repL.findAll();
 	}
-	
-	@GetMapping(value = "/{id_logradouro}")
-	public Logradouro retornaLogradouroPorID(@PathVariable Long id_logradouro) {
-		
-		Optional<Logradouro> op = cacheL.findById(id_logradouro);
-		
-		if(op.isPresent()) {
+
+	@GetMapping(value = "/{idLogradouro}")
+	public Logradouro retornaLogradouroPorID(@PathVariable Long idLogradouro) {
+		Optional<Logradouro> op = cacheL.findById(idLogradouro);
+
+		if (op.isPresent()) {
 			return op.get();
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-		
 	}
-	
+
 	@PostMapping(value = "/inserir")
 	public Logradouro inserirLogradouro(@RequestBody Logradouro logradouro) {
 		repL.save(logradouro);
 		cacheL.limparCache();
 		return logradouro;
 	}
-	
-	@PutMapping(value = "/atualizar/{id_logradouro}")
-	public Logradouro atualizarLogradouro(@RequestBody Logradouro logradouro, @PathVariable Long id_logradouro) {
 
-		Optional<Logradouro> op = cacheL.findById(id_logradouro);
+	@PutMapping(value = "/atualizar/{idLogradouro}")
+	public Logradouro atualizarLogradouro(@RequestBody Logradouro logradouro, @PathVariable Long idLogradouro) {
+		Optional<Logradouro> op = cacheL.findById(idLogradouro);
 
 		if (op.isPresent()) {
+			Logradouro logradouroAtual = op.get();
 
-			Logradouro logradouro_atual = op.get();
+			logradouroAtual.setNmLogradouro(logradouro.getNmLogradouro());
+			logradouroAtual.setNrLogradouro(logradouro.getNrLogradouro());
+			logradouroAtual.setComplemento(logradouro.getComplemento());
 
-			logradouro_atual.setNm_logradouro(logradouro.getNm_logradouro());
-			logradouro_atual.setNr_logradouro(logradouro.getNr_logradouro());
-			logradouro_atual.setComplemento(logradouro.getComplemento());
-
-			repL.save(logradouro_atual);
+			repL.save(logradouroAtual);
 			cacheL.limparCache();
 
-			return logradouro_atual;
-
+			return logradouroAtual;
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
-	
-	@DeleteMapping(value = "/remover/{id_logradouro}")
-	public Logradouro removerLogradouro(@PathVariable Long id_logradouro) {
 
-		Optional<Logradouro> op = cacheL.findById(id_logradouro);
+	@DeleteMapping(value = "/remover/{idLogradouro}")
+	public Logradouro removerLogradouro(@PathVariable Long idLogradouro) {
+		Optional<Logradouro> op = cacheL.findById(idLogradouro);
 
 		if (op.isPresent()) {
-
 			Logradouro logradouro = op.get();
 			repL.delete(logradouro);
 			cacheL.limparCache();
 			return logradouro;
-
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
-	
 }

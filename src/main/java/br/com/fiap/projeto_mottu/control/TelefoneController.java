@@ -25,74 +25,68 @@ public class TelefoneController {
 
 	@Autowired
 	private TelefoneRepository repT;
-	
+
 	@Autowired
 	private TelefoneCachingService cacheT;
-	
+
 	@GetMapping(value = "/todos")
-	public List<Telefone> retornaTodosTelefones(){
+	public List<Telefone> retornaTodosTelefones() {
 		return repT.findAll();
 	}
-	
-	@GetMapping(value = "/{id_telefone}")
-	public Telefone retornaTelefonePorID(@PathVariable Long id_telefone) {
-		
-		Optional<Telefone> op = cacheT.findById(id_telefone);
-		
-		if(op.isPresent()) {
+
+	@GetMapping(value = "/{idTelefone}")
+	public Telefone retornaTelefonePorID(@PathVariable Long idTelefone) {
+
+		Optional<Telefone> op = cacheT.findById(idTelefone);
+
+		if (op.isPresent()) {
 			return op.get();
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-		
 	}
-	
+
 	@PostMapping(value = "/inserir")
 	public Telefone inserirTelefone(@RequestBody Telefone telefone) {
 		repT.save(telefone);
 		cacheT.limparCache();
 		return telefone;
 	}
-	
-	@PutMapping(value = "/atualizar/{id_telefone}")
-	public Telefone atualizarTelefone(@RequestBody Telefone telefone, @PathVariable Long id_telefone) {
 
-		Optional<Telefone> op = cacheT.findById(id_telefone);
+	@PutMapping(value = "/atualizar/{idTelefone}")
+	public Telefone atualizarTelefone(@RequestBody Telefone telefone, @PathVariable Long idTelefone) {
+
+		Optional<Telefone> op = cacheT.findById(idTelefone);
 
 		if (op.isPresent()) {
+			Telefone telefoneAtual = op.get();
 
-			Telefone telefone_atual = op.get();
+			telefoneAtual.setNrTelefone(telefone.getNrTelefone());
+			telefoneAtual.setNrDdi(telefone.getNrDdi());
+			telefoneAtual.setNrDdd(telefone.getNrDdd());
 
-			telefone_atual.setNr_telefone(telefone.getNr_telefone());
-			telefone_atual.setNr_ddi(telefone.getNr_ddi());
-			telefone_atual.setNr_ddd(telefone.getNr_ddd());
-			
-			repT.save(telefone_atual);
+			repT.save(telefoneAtual);
 			cacheT.limparCache();
 
-			return telefone_atual;
+			return telefoneAtual;
 
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
-	
-	@DeleteMapping(value = "/remover/{id_telefone}")
-	public Telefone removerTelefone(@PathVariable Long id_telefone) {
 
-		Optional<Telefone> op = cacheT.findById(id_telefone);
+	@DeleteMapping(value = "/remover/{idTelefone}")
+	public Telefone removerTelefone(@PathVariable Long idTelefone) {
+
+		Optional<Telefone> op = cacheT.findById(idTelefone);
 
 		if (op.isPresent()) {
-
 			Telefone telefone = op.get();
 			repT.delete(telefone);
 			cacheT.limparCache();
 			return telefone;
-
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
 }

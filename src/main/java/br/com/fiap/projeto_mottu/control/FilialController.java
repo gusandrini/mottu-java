@@ -28,105 +28,90 @@ import br.com.fiap.projeto_mottu.service.FilialService;
 @RestController
 @RequestMapping(value = "/filiais")
 public class FilialController {
+
 	@Autowired
 	private FilialRepository repF;
-	
+
 	@Autowired
 	private FilialService servF;
-	
+
 	@Autowired
 	private FilialCachingService cacheF;
-	
+
 	@GetMapping(value = "/todas")
-	public List<Filial> retornaTodasFiliais(){
+	public List<Filial> retornaTodasFiliais() {
 		return repF.findAll();
 	}
-	
+
 	@GetMapping(value = "/todas_cacheable")
-	public List<Filial> retornaTodasFiliaisCacheable(){
+	public List<Filial> retornaTodasFiliaisCacheable() {
 		return cacheF.findAll();
 	}
-	
+
 	@GetMapping(value = "/paginados")
 	public ResponseEntity<Page<FilialDTO>> paginarFiliais(
-			@RequestParam(value = "pagina", defaultValue = "0") Integer page, 
-			@RequestParam(value = "tamanho", defaultValue = "2") Integer size){
-		
+			@RequestParam(value = "pagina", defaultValue = "0") Integer page,
+			@RequestParam(value = "tamanho", defaultValue = "2") Integer size) {
+
 		PageRequest pr = PageRequest.of(page, size);
-		
-		Page<FilialDTO> paginas_filiais_dto = servF.paginar(pr);
-		
-		return ResponseEntity.ok(paginas_filiais_dto);
-		
+		Page<FilialDTO> paginasFiliaisDto = servF.paginar(pr);
+		return ResponseEntity.ok(paginasFiliaisDto);
 	}
-	
-	@GetMapping(value = "/{id_filial}")
-	public Filial retornaFilialPorID(@PathVariable Long id_filial) {
-		
-		Optional<Filial> op = cacheF.findById(id_filial);
-		
-		if(op.isPresent()) {
+
+	@GetMapping(value = "/{idFilial}")
+	public Filial retornaFilialPorID(@PathVariable Long idFilial) {
+		Optional<Filial> op = cacheF.findById(idFilial);
+
+		if (op.isPresent()) {
 			return op.get();
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-		
 	}
-	
+
 	@PostMapping(value = "/inserir")
 	public Filial inserirFilial(@RequestBody Filial filial) {
 		repF.save(filial);
 		cacheF.limparCache();
 		return filial;
 	}
-	
+
 	@GetMapping("/busca_por_nome_filial")
 	public ResponseEntity<List<Filial>> buscarPorNome(@RequestParam String nomeFilial) {
-	    List<Filial> filiais = repF.buscarPorNome(nomeFilial);
-	    if (filiais.isEmpty()) {
-	        return ResponseEntity.noContent().build();
-	    }
-	    return ResponseEntity.ok(filiais);
+		List<Filial> filiais = repF.buscarPorNome(nomeFilial);
+		return filiais.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(filiais);
 	}
-	
-	@PutMapping(value = "/atualizar/{id_filial}")
-	public Filial atualizarFilial(@RequestBody Filial filial, @PathVariable Long id_filial) {
 
-		Optional<Filial> op = cacheF.findById(id_filial);
+	@PutMapping(value = "/atualizar/{idFilial}")
+	public Filial atualizarFilial(@RequestBody Filial filial, @PathVariable Long idFilial) {
+		Optional<Filial> op = cacheF.findById(idFilial);
 
 		if (op.isPresent()) {
+			Filial filialAtual = op.get();
 
-			Filial filial_atual = op.get();
+			filialAtual.setNomeFilial(filial.getNomeFilial());
+			filialAtual.setLogradouro(filial.getLogradouro());
 
-			filial_atual.setNome_filial(filial.getNome_filial());
-			filial_atual.setLogradouro(filial.getLogradouro());
-			
-			repF.save(filial_atual);
+			repF.save(filialAtual);
 			cacheF.limparCache();
 
-			return filial_atual;
-
+			return filialAtual;
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
 
-	@DeleteMapping(value = "/remover/{id_filial}")
-	public Filial removerFilial(@PathVariable Long id_filial) {
-
-		Optional<Filial> op = cacheF.findById(id_filial);
+	@DeleteMapping(value = "/remover/{idFilial}")
+	public Filial removerFilial(@PathVariable Long idFilial) {
+		Optional<Filial> op = cacheF.findById(idFilial);
 
 		if (op.isPresent()) {
-
 			Filial filial = op.get();
 			repF.delete(filial);
 			cacheF.limparCache();
 			return filial;
-
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
 }

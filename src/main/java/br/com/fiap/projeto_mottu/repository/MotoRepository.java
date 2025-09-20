@@ -11,21 +11,24 @@ import br.com.fiap.projeto_mottu.model.Moto;
 import br.com.fiap.projeto_mottu.model.SituacaoEnum;
 import br.com.fiap.projeto_mottu.projection.MotoProjection;
 
-public interface MotoRepository extends JpaRepository<Moto, Long>{
+public interface MotoRepository extends JpaRepository<Moto, Long> {
 
-	// Busca motos por situação, e ordena os resultados pelo campo nm_modelo, por ordem crescente alfabética
-	@Query("SELECT m FROM Moto m WHERE m.st_moto = :situacao ORDER BY m.nm_modelo ASC")
+	// Busca por situação e ordena pelo modelo (atributos Java!)
+	@Query("SELECT m FROM Moto m WHERE m.stMoto = :situacao ORDER BY m.nmModelo ASC")
 	List<Moto> buscarPorSituacaoOrdenadoPorModelo(@Param("situacao") SituacaoEnum situacao);
 
-    // Busca moto por placa
-	@Query("SELECT m FROM Moto m WHERE m.nm_placa = :placa")
-    Optional<Moto> buscarPorPlaca(String placa);
+	// Busca por placa (case-insensitive)
+	@Query("SELECT m FROM Moto m WHERE UPPER(m.nmPlaca) = UPPER(:placa)")
+	Optional<Moto> buscarPorPlaca(@Param("placa") String placa);
 
-    //Busca moto por nome da filial, ordenada por modelo
-	@Query("SELECT m.nm_placa AS nmPlaca, m.nm_modelo AS nmModelo, m.st_moto AS stMoto " +
-		       "FROM Moto m " +
-		       "WHERE LOWER(m.filial_departamento.filial.nome_filial) LIKE LOWER(CONCAT('%', :nomeFilial, '%')) " +
-		       "ORDER BY m.nm_modelo")
+	// Busca por nome da filial (via relacionamento), ordenado por modelo
+	@Query("""
+           SELECT m.nmPlaca AS nmPlaca,
+                  m.nmModelo AS nmModelo,
+                  m.stMoto  AS stMoto
+           FROM Moto m
+           WHERE LOWER(m.filialDepartamento.filial.nomeFilial) LIKE LOWER(CONCAT('%', :nomeFilial, '%'))
+           ORDER BY m.nmModelo
+           """)
 	List<MotoProjection> buscarMotosPorNomeDaFilialOrdenadoPorModelo(@Param("nomeFilial") String nomeFilial);
-
 }

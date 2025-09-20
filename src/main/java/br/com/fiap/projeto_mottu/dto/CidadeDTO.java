@@ -1,34 +1,45 @@
 package br.com.fiap.projeto_mottu.dto;
 
+import org.springframework.hateoas.RepresentationModel;
 import br.com.fiap.projeto_mottu.model.Cidade;
 import br.com.fiap.projeto_mottu.model.Estado;
 
-public class CidadeDTO {
-	private Long id_cidade;
+public class CidadeDTO extends RepresentationModel<CidadeDTO> {
+
+	private Long idCidade;
+	private String nmCidade;
 	private Estado estado;
-	private String nm_cidade;
-	
+
+	// Construtores
 	public CidadeDTO() {}
 
-	public CidadeDTO(Long id_cidade, Estado estado, String nm_cidade) {
-		super();
-		this.id_cidade = id_cidade;
+	public CidadeDTO(Long idCidade, String nmCidade, Estado estado) {
+		this.idCidade = idCidade;
+		this.nmCidade = nmCidade;
 		this.estado = estado;
-		this.nm_cidade = nm_cidade;
 	}
-	
+
 	public CidadeDTO(Cidade cidade) {
-		setId_cidade(cidade.getId_cidade());
-		setEstado(cidade.getEstado());
-		setNm_cidade(cidade.getNm_cidade());
+		this.idCidade = cidade.getIdCidade();
+		this.nmCidade = cidade.getNmCidade();
+		this.estado = cidade.getEstado();
 	}
 
-	public Long getId_cidade() {
-		return id_cidade;
+	// Getters e Setters manuais
+	public Long getIdCidade() {
+		return idCidade;
 	}
 
-	public void setId_cidade(Long id_cidade) {
-		this.id_cidade = id_cidade;
+	public void setIdCidade(Long idCidade) {
+		this.idCidade = idCidade;
+	}
+
+	public String getNmCidade() {
+		return nmCidade;
+	}
+
+	public void setNmCidade(String nmCidade) {
+		this.nmCidade = nmCidade;
 	}
 
 	public Estado getEstado() {
@@ -38,14 +49,4 @@ public class CidadeDTO {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
-
-	public String getNm_cidade() {
-		return nm_cidade;
-	}
-
-	public void setNm_cidade(String nm_cidade) {
-		this.nm_cidade = nm_cidade;
-	}
-	
-	
 }

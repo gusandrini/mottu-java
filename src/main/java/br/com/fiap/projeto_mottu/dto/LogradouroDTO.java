@@ -4,39 +4,38 @@ import br.com.fiap.projeto_mottu.model.Bairro;
 import br.com.fiap.projeto_mottu.model.Logradouro;
 
 public class LogradouroDTO {
-	private Long id_logradouro;
+
+	private Long idLogradouro;
 	private Bairro bairro;
-	private String nm_logradouro;
-	private Integer nr_logradouro;
+	private String nmLogradouro;
+	private Integer nrLogradouro;
 	private String complemento;
-	
+
 	public LogradouroDTO() {}
 
-	public LogradouroDTO(Long id_logradouro, Bairro bairro, String nm_logradouro, Integer nr_logradouro,
-			String complemento) {
-		super();
-		this.id_logradouro = id_logradouro;
+	public LogradouroDTO(Long idLogradouro, Bairro bairro, String nmLogradouro, Integer nrLogradouro, String complemento) {
+		this.idLogradouro = idLogradouro;
 		this.bairro = bairro;
-		this.nm_logradouro = nm_logradouro;
-		this.nr_logradouro = nr_logradouro;
+		this.nmLogradouro = nmLogradouro;
+		this.nrLogradouro = nrLogradouro;
 		this.complemento = complemento;
 	}
-	
+
 	public LogradouroDTO(Logradouro logradouro) {
-		setId_logradouro(logradouro.getId_logradouro());
-		setBairro(logradouro.getBairro());
-		setNm_logradouro(logradouro.getNm_logradouro());
-		setNr_logradouro(logradouro.getNr_logradouro());
-		setComplemento(logradouro.getComplemento());
-		
+		this.idLogradouro = logradouro.getIdLogradouro();
+		this.bairro = logradouro.getBairro();
+		this.nmLogradouro = logradouro.getNmLogradouro();
+		this.nrLogradouro = logradouro.getNrLogradouro();
+		this.complemento = logradouro.getComplemento();
 	}
 
-	public Long getId_logradouro() {
-		return id_logradouro;
+	// Getters e Setters manuais
+	public Long getIdLogradouro() {
+		return idLogradouro;
 	}
 
-	public void setId_logradouro(Long id_logradouro) {
-		this.id_logradouro = id_logradouro;
+	public void setIdLogradouro(Long idLogradouro) {
+		this.idLogradouro = idLogradouro;
 	}
 
 	public Bairro getBairro() {
@@ -47,20 +46,20 @@ public class LogradouroDTO {
 		this.bairro = bairro;
 	}
 
-	public String getNm_logradouro() {
-		return nm_logradouro;
+	public String getNmLogradouro() {
+		return nmLogradouro;
 	}
 
-	public void setNm_logradouro(String nm_logradouro) {
-		this.nm_logradouro = nm_logradouro;
+	public void setNmLogradouro(String nmLogradouro) {
+		this.nmLogradouro = nmLogradouro;
 	}
 
-	public Integer getNr_logradouro() {
-		return nr_logradouro;
+	public Integer getNrLogradouro() {
+		return nrLogradouro;
 	}
 
-	public void setNr_logradouro(Integer nr_logradouro) {
-		this.nr_logradouro = nr_logradouro;
+	public void setNrLogradouro(Integer nrLogradouro) {
+		this.nrLogradouro = nrLogradouro;
 	}
 
 	public String getComplemento() {
@@ -70,6 +69,4 @@ public class LogradouroDTO {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
-	
-	
 }

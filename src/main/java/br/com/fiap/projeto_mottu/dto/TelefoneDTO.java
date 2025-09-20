@@ -4,37 +4,38 @@ import br.com.fiap.projeto_mottu.model.Cliente;
 import br.com.fiap.projeto_mottu.model.Telefone;
 
 public class TelefoneDTO {
-	private Long id_telefone;
+
+	private Long idTelefone;
 	private Cliente cliente;
-	private String nr_telefone;
-	private String nr_ddi;
-	private String nr_ddd;
-	
+	private String nrTelefone;
+	private String nrDdi;
+	private String nrDdd;
+
 	public TelefoneDTO() {}
 
-	public TelefoneDTO(Long id_telefone, Cliente cliente, String nr_telefone, String nr_ddi, String nr_ddd) {
-		super();
-		this.id_telefone = id_telefone;
+	public TelefoneDTO(Long idTelefone, Cliente cliente, String nrTelefone, String nrDdi, String nrDdd) {
+		this.idTelefone = idTelefone;
 		this.cliente = cliente;
-		this.nr_telefone = nr_telefone;
-		this.nr_ddi = nr_ddi;
-		this.nr_ddd = nr_ddd;
+		this.nrTelefone = nrTelefone;
+		this.nrDdi = nrDdi;
+		this.nrDdd = nrDdd;
 	}
-	
+
 	public TelefoneDTO(Telefone telefone) {
-		setId_telefone(telefone.getId_telefone());
-		setCliente(telefone.getCliente());
-		setNr_telefone(telefone.getNr_telefone());
-		setNr_ddi(telefone.getNr_ddi());
-		setNr_ddd(telefone.getNr_ddd());
+		this.idTelefone = telefone.getIdTelefone();
+		this.cliente = telefone.getCliente();
+		this.nrTelefone = telefone.getNrTelefone();
+		this.nrDdi = telefone.getNrDdi();
+		this.nrDdd = telefone.getNrDdd();
 	}
 
-	public Long getId_telefone() {
-		return id_telefone;
+	// Getters e Setters manuais
+	public Long getIdTelefone() {
+		return idTelefone;
 	}
 
-	public void setId_telefone(Long id_telefone) {
-		this.id_telefone = id_telefone;
+	public void setIdTelefone(Long idTelefone) {
+		this.idTelefone = idTelefone;
 	}
 
 	public Cliente getCliente() {
@@ -45,29 +46,27 @@ public class TelefoneDTO {
 		this.cliente = cliente;
 	}
 
-	public String getNr_telefone() {
-		return nr_telefone;
+	public String getNrTelefone() {
+		return nrTelefone;
 	}
 
-	public void setNr_telefone(String nr_telefone) {
-		this.nr_telefone = nr_telefone;
+	public void setNrTelefone(String nrTelefone) {
+		this.nrTelefone = nrTelefone;
 	}
 
-	public String getNr_ddi() {
-		return nr_ddi;
+	public String getNrDdi() {
+		return nrDdi;
 	}
 
-	public void setNr_ddi(String nr_ddi) {
-		this.nr_ddi = nr_ddi;
+	public void setNrDdi(String nrDdi) {
+		this.nrDdi = nrDdi;
 	}
 
-	public String getNr_ddd() {
-		return nr_ddd;
+	public String getNrDdd() {
+		return nrDdd;
 	}
 
-	public void setNr_ddd(String nr_ddd) {
-		this.nr_ddd = nr_ddd;
+	public void setNrDdd(String nrDdd) {
+		this.nrDdd = nrDdd;
 	}
-	
-	
 }

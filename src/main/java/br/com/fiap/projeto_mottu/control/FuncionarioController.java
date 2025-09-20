@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,117 +30,114 @@ import br.com.fiap.projeto_mottu.service.FuncionarioService;
 @RestController
 @RequestMapping(value = "/funcionarios")
 public class FuncionarioController {
+
 	@Autowired
 	private FuncionarioRepository repFunc;
-	
+
 	@Autowired
 	private FuncionarioCachingService cacheFunc;
-	
+
 	@Autowired
 	private FuncionarioService servFunc;
-	
+
+	@Autowired
+	private PasswordEncoder passwordEncoder; // ✅ injetado
+
+
+
 	@GetMapping(value = "/todos")
-	public List<Funcionario> retornaTodosFuncionarios(){
+	public List<Funcionario> retornaTodosFuncionarios() {
 		return repFunc.findAll();
 	}
-	
+
 	@GetMapping(value = "/todos_cacheable")
-	public List<Funcionario> retornaTodosFuncionariosCacheable(){
+	public List<Funcionario> retornaTodosFuncionariosCacheable() {
 		return cacheFunc.findAll();
 	}
-	
+
 	@GetMapping(value = "/paginados")
 	public ResponseEntity<Page<FuncionarioDTO>> paginarFuncionarios(
-			@RequestParam(value = "pagina", defaultValue = "0") Integer page, 
-			@RequestParam(value = "tamanho", defaultValue = "2") Integer size){
-		
+			@RequestParam(value = "pagina", defaultValue = "0") Integer page,
+			@RequestParam(value = "tamanho", defaultValue = "2") Integer size) {
+
 		PageRequest pr = PageRequest.of(page, size);
-		
 		Page<FuncionarioDTO> paginas_funcionarios_dto = servFunc.paginar(pr);
-		
 		return ResponseEntity.ok(paginas_funcionarios_dto);
-		
 	}
-	
+
 	@GetMapping(value = "/{id_funcionario}")
 	public Funcionario retornaFuncionarioPorID(@PathVariable Long id_funcionario) {
-		
-		Optional<Funcionario> op = cacheFunc.findById(id_funcionario);
-		
-		if(op.isPresent()) {
-			return op.get();
-		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
-		
+		return cacheFunc.findById(id_funcionario)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
-	
+
 	@PostMapping(value = "/inserir")
 	public Funcionario inserirFuncionario(@RequestBody Funcionario funcionario) {
+		// 🔒 já salva senha criptografada
+		funcionario.setSenhaHash(passwordEncoder.encode(funcionario.getSenhaHash()));
+
 		repFunc.save(funcionario);
 		cacheFunc.limparCache();
 		return funcionario;
 	}
-	
+
 	@PutMapping(value = "/atualizar/{id_funcionario}")
-	public Funcionario atualizarFuncionario(@RequestBody Funcionario funcionario, @PathVariable Long id_funcionario) {
+	public Funcionario atualizarFuncionario(@RequestBody Funcionario funcionario,
+											@PathVariable Long id_funcionario) {
 
 		Optional<Funcionario> op = cacheFunc.findById(id_funcionario);
 
 		if (op.isPresent()) {
+			Funcionario funcionarioAtual = op.get();
 
-			Funcionario funcionario_atual = op.get();
+			funcionarioAtual.setNome(funcionario.getNome());
+			funcionarioAtual.setCargo(funcionario.getCargo());
+			funcionarioAtual.setEmailCorporativo(funcionario.getEmailCorporativo());
 
-			funcionario_atual.setNm_funcionario(funcionario.getNm_funcionario());
-			funcionario_atual.setNm_cargo(funcionario.getNm_cargo());
-			funcionario_atual.setNm_email_corporativo(funcionario.getNm_email_corporativo());
-			funcionario_atual.setNm_senha(funcionario.getNm_senha());
+			// 🔒 só atualiza senha se vier preenchida
+			if (funcionario.getSenhaHash() != null && !funcionario.getSenhaHash().isBlank()) {
+				funcionarioAtual.setSenhaHash(passwordEncoder.encode(funcionario.getSenhaHash()));
+			}
 
-			repFunc.save(funcionario_atual);
+			repFunc.save(funcionarioAtual);
 			cacheFunc.limparCache();
 
-			return funcionario_atual;
-
+			return funcionarioAtual;
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
 
 	@DeleteMapping(value = "/remover/{id_funcionario}")
 	public Funcionario removerFuncionario(@PathVariable Long id_funcionario) {
-
 		Optional<Funcionario> op = cacheFunc.findById(id_funcionario);
 
 		if (op.isPresent()) {
-
 			Funcionario funcionario = op.get();
 			repFunc.delete(funcionario);
 			cacheFunc.limparCache();
 			return funcionario;
-
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
-	
+
 	@GetMapping("/buscar_por_filial")
-    public ResponseEntity<List<FuncionarioProjection>> buscarPorFilial(@RequestParam String nomeFilial) {
-        List<FuncionarioProjection> funcionarios = repFunc.buscarFuncionariosPorNomeFilial(nomeFilial);
-        if (funcionarios.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(funcionarios);
-    }
-	
+	public ResponseEntity<List<FuncionarioProjection>> buscarPorFilial(@RequestParam String nomeFilial) {
+		List<FuncionarioProjection> funcionarios = repFunc.buscarFuncionariosPorNomeFilial(nomeFilial);
+		if (funcionarios.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(funcionarios);
+	}
+
 	@GetMapping("/buscar_por_cargo")
 	public ResponseEntity<List<FuncionarioProjection>> buscarPorCargo(@RequestParam String cargo) {
-	    List<FuncionarioProjection> funcionarios = repFunc.buscarFuncionariosPorCargoOrdenado(cargo);
-	    if (funcionarios.isEmpty()) {
-	        return ResponseEntity.notFound().build();
-	    }
-	    return ResponseEntity.ok(funcionarios);
+		List<FuncionarioProjection> funcionarios = repFunc.buscarFuncionariosPorCargoOrdenado(cargo);
+		if (funcionarios.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(funcionarios);
 	}
-	
 }
+

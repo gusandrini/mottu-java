@@ -1,13 +1,11 @@
 package br.com.fiap.projeto_mottu.control;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,120 +25,107 @@ import br.com.fiap.projeto_mottu.repository.ManutencaoRepository;
 import br.com.fiap.projeto_mottu.service.ManutencaoCachingService;
 import br.com.fiap.projeto_mottu.service.ManutencaoService;
 
-
 @RestController
 @RequestMapping(value = "/manutencoes")
 public class ManutencaoController {
 
 	@Autowired
 	private ManutencaoRepository repMan;
-	
+
 	@Autowired
 	private ManutencaoService servMan;
-	
+
 	@Autowired
 	private ManutencaoCachingService cacheMan;
-	
+
 	@GetMapping(value = "/todas")
-	public List<Manutencao> retornaTodosManutencoes(){
+	public List<Manutencao> retornaTodosManutencoes() {
 		return repMan.findAll();
 	}
-	
+
 	@GetMapping(value = "/todos_cacheable")
-	public List<Manutencao> retornaTodasManutencoesCacheable(){
+	public List<Manutencao> retornaTodasManutencoesCacheable() {
 		return cacheMan.findAll();
 	}
-	
+
 	@GetMapping(value = "/paginados")
 	public ResponseEntity<Page<ManutencaoDTO>> paginarManutencoes(
-			@RequestParam(value = "pagina", defaultValue = "0") Integer page, 
-			@RequestParam(value = "tamanho", defaultValue = "2") Integer size){
-		
+			@RequestParam(value = "pagina", defaultValue = "0") Integer page,
+			@RequestParam(value = "tamanho", defaultValue = "2") Integer size) {
+
 		PageRequest pr = PageRequest.of(page, size);
-		
-		Page<ManutencaoDTO> paginas_manutencoes_dto = servMan.paginar(pr);
-		
-		return ResponseEntity.ok(paginas_manutencoes_dto);
-		
+		Page<ManutencaoDTO> paginasManutencoesDto = servMan.paginar(pr);
+
+		return ResponseEntity.ok(paginasManutencoesDto);
 	}
-	
-	@GetMapping(value = "/{id_manutencao}")
-	public Manutencao retornaManutencaoPorID(@PathVariable Long id_manutencao) {
-		
-		Optional<Manutencao> op = cacheMan.findById(id_manutencao);
-		
-		if(op.isPresent()) {
+
+	@GetMapping(value = "/{idManutencao}")
+	public Manutencao retornaManutencaoPorID(@PathVariable Long idManutencao) {
+		Optional<Manutencao> op = cacheMan.findById(idManutencao);
+
+		if (op.isPresent()) {
 			return op.get();
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-		
 	}
-	
+
 	@PostMapping(value = "/inserir")
 	public Manutencao inserirManutencao(@RequestBody Manutencao manutencao) {
 		repMan.save(manutencao);
 		cacheMan.limparCache();
 		return manutencao;
 	}
-	
+
 	@GetMapping("/buscar_todas_ordenada_por_data")
-    public List<Manutencao> buscarOrdenadasPorDataEntrada() {
-        return repMan.buscarTodasOrdenadasPorDataEntrada();
-    }
-	
+	public List<Manutencao> buscarOrdenadasPorDataEntrada() {
+		return repMan.buscarTodasOrdenadasPorDataEntrada();
+	}
+
 	@GetMapping("/buscar_em_aberto")
-    public ResponseEntity<List<Manutencao>> buscarManutencoesEmAberto() {
-        List<Manutencao> manutencoes = repMan.buscarManutencoesEmAberto();
-        return manutencoes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(manutencoes);
-    }
-	
+	public ResponseEntity<List<Manutencao>> buscarManutencoesEmAberto() {
+		List<Manutencao> manutencoes = repMan.buscarManutencoesEmAberto();
+		return manutencoes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(manutencoes);
+	}
+
 	@GetMapping("/buscar_por_descricao")
-    public ResponseEntity<List<Manutencao>> buscarPorDescricao(@RequestParam String keyword) {
-        List<Manutencao> manutencoes = repMan.buscarPorDescricao(keyword);
-        return manutencoes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(manutencoes);
-    }
+	public ResponseEntity<List<Manutencao>> buscarPorDescricao(@RequestParam String keyword) {
+		List<Manutencao> manutencoes = repMan.buscarPorDescricao(keyword);
+		return manutencoes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(manutencoes);
+	}
 
-	@PutMapping(value = "/atualizar/{id_manutencao}")
-	public Manutencao atualizarManutencao(@RequestBody Manutencao manutencao, @PathVariable Long id_manutencao) {
-
-		Optional<Manutencao> op = cacheMan.findById(id_manutencao);
+	@PutMapping(value = "/atualizar/{idManutencao}")
+	public Manutencao atualizarManutencao(@RequestBody Manutencao manutencao, @PathVariable Long idManutencao) {
+		Optional<Manutencao> op = cacheMan.findById(idManutencao);
 
 		if (op.isPresent()) {
+			Manutencao manutencaoAtual = op.get();
 
-			Manutencao manutencao_atual = op.get();
+			manutencaoAtual.setMoto(manutencao.getMoto());
+			manutencaoAtual.setDsManutencao(manutencao.getDsManutencao());
+			manutencaoAtual.setDtEntrada(manutencao.getDtEntrada());
+			manutencaoAtual.setDtSaida(manutencao.getDtSaida());
 
-			manutencao_atual.setMoto(manutencao.getMoto());
-			manutencao_atual.setDs_manutencao(manutencao.getDs_manutencao());
-			manutencao_atual.setDt_entrada(manutencao.getDt_entrada());
-			manutencao_atual.setDt_saida(manutencao.getDt_saida());
-		
-			repMan.save(manutencao_atual);
+			repMan.save(manutencaoAtual);
 			cacheMan.limparCache();
 
-			return manutencao_atual;
-
+			return manutencaoAtual;
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
 
-	@DeleteMapping(value = "/remover/{id_manutencao}")
-	public Manutencao removerManutencao(@PathVariable Long id_manutencao) {
-
-		Optional<Manutencao> op = cacheMan.findById(id_manutencao);
+	@DeleteMapping(value = "/remover/{idManutencao}")
+	public Manutencao removerManutencao(@PathVariable Long idManutencao) {
+		Optional<Manutencao> op = cacheMan.findById(idManutencao);
 
 		if (op.isPresent()) {
-
 			Manutencao manutencao = op.get();
 			repMan.delete(manutencao);
 			cacheMan.limparCache();
 			return manutencao;
-
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
 }

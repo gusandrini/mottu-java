@@ -4,31 +4,32 @@ import br.com.fiap.projeto_mottu.model.Estado;
 import br.com.fiap.projeto_mottu.model.Pais;
 
 public class EstadoDTO {
-	private Long id_estado;
+
+	private Long idEstado;
 	private Pais pais;
-	private String nm_estado;
-	
-	public EstadoDTO () {}
+	private String nmEstado;
 
-	public EstadoDTO(Long id_estado, Pais pais, String nm_estado) {
-		super();
-		this.id_estado = id_estado;
+	public EstadoDTO() {}
+
+	public EstadoDTO(Long idEstado, Pais pais, String nmEstado) {
+		this.idEstado = idEstado;
 		this.pais = pais;
-		this.nm_estado = nm_estado;
-	}
-	
-	public EstadoDTO (Estado estado) {
-		setId_estado(estado.getId_estado());
-		setPais(estado.getPais());
-		setNm_estado(estado.getNm_estado());
+		this.nmEstado = nmEstado;
 	}
 
-	public Long getId_estado() {
-		return id_estado;
+	public EstadoDTO(Estado estado) {
+		this.idEstado = estado.getIdEstado();
+		this.pais = estado.getPais();
+		this.nmEstado = estado.getNmEstado();
 	}
 
-	public void setId_estado(Long id_estado) {
-		this.id_estado = id_estado;
+	// Getters e Setters
+	public Long getIdEstado() {
+		return idEstado;
+	}
+
+	public void setIdEstado(Long idEstado) {
+		this.idEstado = idEstado;
 	}
 
 	public Pais getPais() {
@@ -39,13 +40,11 @@ public class EstadoDTO {
 		this.pais = pais;
 	}
 
-	public String getNm_estado() {
-		return nm_estado;
+	public String getNmEstado() {
+		return nmEstado;
 	}
 
-	public void setNm_estado(String nm_estado) {
-		this.nm_estado = nm_estado;
+	public void setNmEstado(String nmEstado) {
+		this.nmEstado = nmEstado;
 	}
-	
-	
 }

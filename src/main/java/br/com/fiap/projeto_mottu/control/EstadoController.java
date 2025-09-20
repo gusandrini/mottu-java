@@ -25,73 +25,61 @@ public class EstadoController {
 
 	@Autowired
 	private EstadoRepository repE;
-	
+
 	@Autowired
 	private EstadoCachingService cacheE;
-	
+
 	@GetMapping(value = "/todos")
-	public List<Estado> retornaTodosEstados(){
+	public List<Estado> retornaTodosEstados() {
 		return repE.findAll();
 	}
-	
-	@GetMapping(value = "/{id_estado}")
-	public Estado retornaEstadoPorID(@PathVariable Long id_estado) {
-		
-		Optional<Estado> op = cacheE.findById(id_estado);
-		
-		if(op.isPresent()) {
+
+	@GetMapping(value = "/{idEstado}")
+	public Estado retornaEstadoPorID(@PathVariable Long idEstado) {
+		Optional<Estado> op = cacheE.findById(idEstado);
+
+		if (op.isPresent()) {
 			return op.get();
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-		
 	}
-	
+
 	@PostMapping(value = "/inserir")
 	public Estado inserirEstado(@RequestBody Estado estado) {
 		repE.save(estado);
 		cacheE.limparCache();
 		return estado;
 	}
-	
-	@PutMapping(value = "/atualizar/{id_estado}")
-	public Estado atualizarEstado(@RequestBody Estado estado, @PathVariable Long id_estado) {
 
-		Optional<Estado> op = cacheE.findById(id_estado);
+	@PutMapping(value = "/atualizar/{idEstado}")
+	public Estado atualizarEstado(@RequestBody Estado estado, @PathVariable Long idEstado) {
+		Optional<Estado> op = cacheE.findById(idEstado);
 
 		if (op.isPresent()) {
+			Estado estadoAtual = op.get();
+			estadoAtual.setNmEstado(estado.getNmEstado()); // corrigido para camelCase
 
-			Estado estado_atual = op.get();
-
-			estado_atual.setNm_estado(estado.getNm_estado());
-			
-
-			repE.save(estado_atual);
+			repE.save(estadoAtual);
 			cacheE.limparCache();
 
-			return estado_atual;
-
+			return estadoAtual;
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
-	
-	@DeleteMapping(value = "/remover/{id_estado}")
-	public Estado removerEstado(@PathVariable Long id_estado) {
 
-		Optional<Estado> op = cacheE.findById(id_estado);
+	@DeleteMapping(value = "/remover/{idEstado}")
+	public Estado removerEstado(@PathVariable Long idEstado) {
+		Optional<Estado> op = cacheE.findById(idEstado);
 
 		if (op.isPresent()) {
-
 			Estado estado = op.get();
 			repE.delete(estado);
 			cacheE.limparCache();
 			return estado;
-
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
 }

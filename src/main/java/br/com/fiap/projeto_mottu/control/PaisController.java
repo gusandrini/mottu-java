@@ -25,73 +25,62 @@ public class PaisController {
 
 	@Autowired
 	private PaisRepository repP;
-	
+
 	@Autowired
 	private PaisCachingService cacheP;
-	
+
 	@GetMapping(value = "/todos")
-	public List<Pais> retornaTodosPaises(){
+	public List<Pais> retornaTodosPaises() {
 		return repP.findAll();
 	}
-	
-	@GetMapping(value = "/{id_pais}")
-	public Pais retornaPaisPorID(@PathVariable Long id_pais) {
-		
-		Optional<Pais> op = cacheP.findById(id_pais);
-		
-		if(op.isPresent()) {
+
+	@GetMapping(value = "/{idPais}")
+	public Pais retornaPaisPorID(@PathVariable Long idPais) {
+		Optional<Pais> op = cacheP.findById(idPais);
+
+		if (op.isPresent()) {
 			return op.get();
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-		
 	}
-	
+
 	@PostMapping(value = "/inserir")
 	public Pais inserirPais(@RequestBody Pais pais) {
 		repP.save(pais);
 		cacheP.limparCache();
 		return pais;
 	}
-	
-	@PutMapping(value = "/atualizar/{id_pais}")
-	public Pais atualizarPais(@RequestBody Pais pais, @PathVariable Long id_pais) {
 
-		Optional<Pais> op = cacheP.findById(id_pais);
+	@PutMapping(value = "/atualizar/{idPais}")
+	public Pais atualizarPais(@RequestBody Pais pais, @PathVariable Long idPais) {
+		Optional<Pais> op = cacheP.findById(idPais);
 
 		if (op.isPresent()) {
+			Pais paisAtual = op.get();
 
-			Pais pais_atual = op.get();
+			paisAtual.setNmPais(pais.getNmPais());
 
-			pais_atual.setNm_pais(pais.getNm_pais());
-			
-
-			repP.save(pais_atual);
+			repP.save(paisAtual);
 			cacheP.limparCache();
 
-			return pais_atual;
-
+			return paisAtual;
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
-	
-	@DeleteMapping(value = "/remover/{id_pais}")
-	public Pais removerPais(@PathVariable Long id_pais) {
 
-		Optional<Pais> op = cacheP.findById(id_pais);
+	@DeleteMapping(value = "/remover/{idPais}")
+	public Pais removerPais(@PathVariable Long idPais) {
+		Optional<Pais> op = cacheP.findById(idPais);
 
 		if (op.isPresent()) {
-
 			Pais pais = op.get();
 			repP.delete(pais);
 			cacheP.limparCache();
 			return pais;
-
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
 }

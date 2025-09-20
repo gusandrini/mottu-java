@@ -33,96 +33,94 @@ public class MotoController {
 
 	@Autowired
 	private MotoRepository repM;
-	
+
 	@Autowired
 	private MotoService servM;
-	
+
 	@Autowired
 	private MotoCachingService cacheM;
-	
+
 	@GetMapping(value = "/todas")
-	public List<Moto> retornaTodasMotos(){
+	public List<Moto> retornaTodasMotos() {
 		return repM.findAll();
 	}
-	
+
 	@GetMapping(value = "/todas_cacheable")
-	public List<Moto> retornaTodasMotosCacheable(){
+	public List<Moto> retornaTodasMotosCacheable() {
 		return cacheM.findAll();
 	}
-	
+
 	@GetMapping(value = "/paginados")
 	public ResponseEntity<Page<MotoDTO>> paginarMotos(
-			@RequestParam(value = "pagina", defaultValue = "0") Integer page, 
-			@RequestParam(value = "tamanho", defaultValue = "2") Integer size){
-		
+			@RequestParam(value = "pagina", defaultValue = "0") Integer page,
+			@RequestParam(value = "tamanho", defaultValue = "2") Integer size) {
+
 		PageRequest pr = PageRequest.of(page, size);
-		
-		Page<MotoDTO> paginas_motos_dto = servM.paginar(pr);
-		
-		return ResponseEntity.ok(paginas_motos_dto);
-		
+		Page<MotoDTO> paginasMotosDto = servM.paginar(pr);
+
+		return ResponseEntity.ok(paginasMotosDto);
 	}
-	
-	@GetMapping(value = "/{id_moto}")
-	public Moto retornaMotoPorID(@PathVariable Long id_moto) {
-		
-		Optional<Moto> op = cacheM.findById(id_moto);
-		
-		if(op.isPresent()) {
+
+	@GetMapping(value = "/{idMoto}")
+	public Moto retornaMotoPorID(@PathVariable Long idMoto) {
+
+		Optional<Moto> op = cacheM.findById(idMoto);
+
+		if (op.isPresent()) {
 			return op.get();
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-		
+
 	}
-	
+
 	@PostMapping(value = "/inserir")
 	public Moto inserirMoto(@RequestBody Moto moto) {
 		repM.save(moto);
 		cacheM.limparCache();
 		return moto;
 	}
-	
+
 	@GetMapping("/buscar_por_situacao")
 	public ResponseEntity<List<Moto>> buscarPorSituacaoOrdenadoPorModelo(
-            @RequestParam("situacao") SituacaoEnum situacao) {
-        List<Moto> motos = repM.buscarPorSituacaoOrdenadoPorModelo(situacao);
-        return ResponseEntity.ok(motos);
-    }
-	
-	 @GetMapping("/buscar_por_placa")
-	 public ResponseEntity<Moto> buscarPorPlaca(@RequestParam("placa") String placa) {
-	        Optional<Moto> moto = repM.buscarPorPlaca(placa);
-	        return moto.map(ResponseEntity::ok)
-	                .orElse(ResponseEntity.notFound().build());
-	 }
-	
+			@RequestParam("situacao") SituacaoEnum situacao) {
+		List<Moto> motos = repM.buscarPorSituacaoOrdenadoPorModelo(situacao);
+		return ResponseEntity.ok(motos);
+	}
+
+	@GetMapping("/buscar_por_placa")
+	public ResponseEntity<Moto> buscarPorPlaca(@RequestParam("placa") String placa) {
+		Optional<Moto> moto = repM.buscarPorPlaca(placa);
+		return moto.map(ResponseEntity::ok)
+				.orElse(ResponseEntity.notFound().build());
+	}
+
 	@GetMapping("/buscar_por_filial_ordenado")
 	public ResponseEntity<List<MotoProjection>> buscarMotosPorFilial(@RequestParam("nomeFilial") String nomeFilial) {
-	    List<MotoProjection> resultado = repM.buscarMotosPorNomeDaFilialOrdenadoPorModelo(nomeFilial);
-	    return ResponseEntity.ok(resultado);
+		List<MotoProjection> resultado = repM.buscarMotosPorNomeDaFilialOrdenadoPorModelo(nomeFilial);
+		return ResponseEntity.ok(resultado);
 	}
-	
-	@PutMapping(value = "/atualizar/{id_moto}")
-	public Moto atualizarMoto(@RequestBody Moto moto, @PathVariable Long id_moto) {
 
-		Optional<Moto> op = cacheM.findById(id_moto);
+	@PutMapping(value = "/atualizar/{idMoto}")
+	public Moto atualizarMoto(@RequestBody Moto moto, @PathVariable Long idMoto) {
+
+		Optional<Moto> op = cacheM.findById(idMoto);
 
 		if (op.isPresent()) {
 
-			Moto moto_atual = op.get();
+			Moto motoAtual = op.get();
 
-			moto_atual.setCliente(moto.getCliente());
-			moto_atual.setFilial_departamento(moto.getFilial_departamento());
-			moto_atual.setNm_modelo(moto.getNm_modelo());
-			moto_atual.setNm_placa(moto.getNm_placa());
-			moto_atual.setSt_moto(moto.getSt_moto());
-			moto_atual.setKm_rodado(moto.getKm_rodado());
-	
-			repM.save(moto_atual);
+			motoAtual.setCliente(moto.getCliente());
+			motoAtual.setFilialDepartamento(moto.getFilialDepartamento());
+			motoAtual.setNmModelo(moto.getNmModelo());
+			motoAtual.setNmPlaca(moto.getNmPlaca());
+			motoAtual.setStMoto(moto.getStMoto());
+			motoAtual.setKmRodado(moto.getKmRodado());
+
+			repM.save(motoAtual);
 			cacheM.limparCache();
 
-			return moto_atual;
+			return motoAtual;
 
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -130,10 +128,10 @@ public class MotoController {
 
 	}
 
-	@DeleteMapping(value = "/remover/{id_moto}")
-	public Moto removerMoto(@PathVariable Long id_moto) {
+	@DeleteMapping(value = "/remover/{idMoto}")
+	public Moto removerMoto(@PathVariable Long idMoto) {
 
-		Optional<Moto> op = cacheM.findById(id_moto);
+		Optional<Moto> op = cacheM.findById(idMoto);
 
 		if (op.isPresent()) {
 

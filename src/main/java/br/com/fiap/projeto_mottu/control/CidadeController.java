@@ -1,97 +1,66 @@
-package br.com.fiap.projeto_mottu.control;
+package br.com.fiap.projeto_mottu.model;
 
-import java.util.List;
-import java.util.Optional;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
-import br.com.fiap.projeto_mottu.model.Cidade;
-import br.com.fiap.projeto_mottu.repository.CidadeRepository;
-import br.com.fiap.projeto_mottu.service.CidadeCachingService;
-
-@RestController
-@RequestMapping(value = "/cidades")
+@Entity
+@Table(name = "cidade")
 public class CidadeController {
 
-	@Autowired
-	private CidadeRepository repCid;
-	
-	@Autowired
-	private CidadeCachingService cacheCid;
-	
-	@GetMapping(value = "/todas")
-	public List<Cidade> retornaTodasCidades(){
-		return repCid.findAll();
-	}
-	
-	@GetMapping(value = "/{id_cidade}")
-	public Cidade retornaCidadePorID(@PathVariable Long id_cidade) {
-		
-		Optional<Cidade> op = cacheCid.findById(id_cidade);
-		
-		if(op.isPresent()) {
-			return op.get();
-		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
-		
-	}
-	
-	@PostMapping(value = "/inserir")
-	public Cidade inserirCidade(@RequestBody Cidade cidade) {
-		repCid.save(cidade);
-		cacheCid.limparCache();
-		return cidade;
-	}
-	
-	@PutMapping(value = "/atualizar/{id_cidade}")
-	public Cidade atualizarCidade(@RequestBody Cidade cidade, @PathVariable Long id_cidade) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id_cidade;
 
-		Optional<Cidade> op = cacheCid.findById(id_cidade);
+    @ManyToOne
+    @JoinColumn(name = "id_estado", nullable = false)
+    @NotNull(message = "A cidade deve estar vinculada a um estado")
+    private Estado estado;
 
-		if (op.isPresent()) {
+    @NotEmpty(message = "O nome da cidade deve ser informado")
+    @Size(max = 50, message = "O nome da cidade deve ter no máximo 50 caracteres")
+    @Column(name = "nm_cidade")
+    private String nm_cidade;
 
-			Cidade cidade_atual = op.get();
+    // Construtores
+    public CidadeController() {}
 
-			cidade_atual.setNm_cidade(cidade.getNm_cidade());
-			
+    public CidadeController(Long id_cidade, Estado estado, String nm_cidade) {
+        this.id_cidade = id_cidade;
+        this.estado = estado;
+        this.nm_cidade = nm_cidade;
+    }
 
-			repCid.save(cidade_atual);
-			cacheCid.limparCache();
+    // Getters e Setters
+    public Long getId_cidade() {
+        return id_cidade;
+    }
 
-			return cidade_atual;
+    public void setId_cidade(Long id_cidade) {
+        this.id_cidade = id_cidade;
+    }
 
-		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
+    public Estado getEstado() {
+        return estado;
+    }
 
-	}
-	
-	@DeleteMapping(value = "/remover/{id_cidade}")
-	public Cidade removerCidade(@PathVariable Long id_cidade) {
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
 
-		Optional<Cidade> op = cacheCid.findById(id_cidade);
+    public String getNm_cidade() {
+        return nm_cidade;
+    }
 
-		if (op.isPresent()) {
-
-			Cidade cidade = op.get();
-			repCid.delete(cidade);
-			cacheCid.limparCache();
-			return cidade;
-
-		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
-
-	}
+    public void setNm_cidade(String nm_cidade) {
+        this.nm_cidade = nm_cidade;
+    }
 }

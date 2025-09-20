@@ -31,94 +31,84 @@ public class FilialDepartamentoController {
 
 	@Autowired
 	private FilialDepartamentoRepository repFD;
-	
+
 	@Autowired
 	private FilialDepartamentoService servFD;
-	
+
 	@Autowired
 	private FilialDepartamentoCachingService cacheFD;
-	
+
 	@GetMapping(value = "/todos")
-	public List<FilialDepartamento> retornaTodosFilialDepartamento(){
+	public List<FilialDepartamento> retornaTodosFilialDepartamento() {
 		return repFD.findAll();
 	}
-	
+
 	@GetMapping(value = "/todos_cacheable")
-	public List<FilialDepartamento> retornaTodosFilialDepartamentoCacheable(){
+	public List<FilialDepartamento> retornaTodosFilialDepartamentoCacheable() {
 		return cacheFD.findAll();
 	}
-	
+
 	@GetMapping(value = "/paginados")
 	public ResponseEntity<Page<FilialDepartamentoDTO>> paginarFilialDepartamento(
-			@RequestParam(value = "pagina", defaultValue = "0") Integer page, 
-			@RequestParam(value = "tamanho", defaultValue = "2") Integer size){
-		
+			@RequestParam(value = "pagina", defaultValue = "0") Integer page,
+			@RequestParam(value = "tamanho", defaultValue = "2") Integer size) {
+
 		PageRequest pr = PageRequest.of(page, size);
-		
-		Page<FilialDepartamentoDTO> paginas_fd_dto = servFD.paginar(pr);
-		
-		return ResponseEntity.ok(paginas_fd_dto);
-		
+		Page<FilialDepartamentoDTO> paginasFdDto = servFD.paginar(pr);
+
+		return ResponseEntity.ok(paginasFdDto);
 	}
-	
-	@GetMapping(value = "/{id_filial_departamento}")
-	public FilialDepartamento retornaFilialDepartamentoPorID(@PathVariable Long id_filial_departamento) {
-		
-		Optional<FilialDepartamento> op = cacheFD.findById(id_filial_departamento);
-		
-		if(op.isPresent()) {
+
+	@GetMapping(value = "/{idFilialDepartamento}")
+	public FilialDepartamento retornaFilialDepartamentoPorID(@PathVariable Long idFilialDepartamento) {
+		Optional<FilialDepartamento> op = cacheFD.findById(idFilialDepartamento);
+
+		if (op.isPresent()) {
 			return op.get();
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-		
 	}
-	
+
 	@PostMapping(value = "/inserir")
 	public FilialDepartamento inserirFilialDepartamento(@RequestBody FilialDepartamento filialDepartamento) {
 		repFD.save(filialDepartamento);
 		cacheFD.limparCache();
 		return filialDepartamento;
 	}
-	
-	@PutMapping(value = "/atualizar/{id_filial_departamento}")
-	public FilialDepartamento atualizarFilialDepartamento(@RequestBody FilialDepartamento filialDepartamento, @PathVariable Long id_filial_departamento) {
 
-		Optional<FilialDepartamento> op = cacheFD.findById(id_filial_departamento);
+	@PutMapping(value = "/atualizar/{idFilialDepartamento}")
+	public FilialDepartamento atualizarFilialDepartamento(@RequestBody FilialDepartamento filialDepartamento,
+														  @PathVariable Long idFilialDepartamento) {
+
+		Optional<FilialDepartamento> op = cacheFD.findById(idFilialDepartamento);
 
 		if (op.isPresent()) {
+			FilialDepartamento filialDepartamentoAtual = op.get();
 
-			FilialDepartamento filial_departamento_atual = op.get();
+			filialDepartamentoAtual.setDtEntrada(filialDepartamento.getDtEntrada());
+			filialDepartamentoAtual.setDtSaida(filialDepartamento.getDtSaida());
 
-			filial_departamento_atual.setDt_entrada(filialDepartamento.getDt_entrada());
-			filial_departamento_atual.setDt_saida(filialDepartamento.getDt_saida());
-
-			repFD.save(filial_departamento_atual);
+			repFD.save(filialDepartamentoAtual);
 			cacheFD.limparCache();
 
-			return filial_departamento_atual;
-
+			return filialDepartamentoAtual;
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
 
-	@DeleteMapping(value = "/remover/{id_filial_departamento}")
-	public FilialDepartamento removerFilialDepartamento(@PathVariable Long id_filial_departamento) {
-
-		Optional<FilialDepartamento> op = cacheFD.findById(id_filial_departamento);
+	@DeleteMapping(value = "/remover/{idFilialDepartamento}")
+	public FilialDepartamento removerFilialDepartamento(@PathVariable Long idFilialDepartamento) {
+		Optional<FilialDepartamento> op = cacheFD.findById(idFilialDepartamento);
 
 		if (op.isPresent()) {
-
 			FilialDepartamento filialDepartamento = op.get();
 			repFD.delete(filialDepartamento);
 			cacheFD.limparCache();
 			return filialDepartamento;
-
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-
 	}
 }

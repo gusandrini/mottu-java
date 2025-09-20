@@ -5,83 +5,76 @@ import org.springframework.hateoas.RepresentationModel;
 import br.com.fiap.projeto_mottu.model.Filial;
 import br.com.fiap.projeto_mottu.model.Funcionario;
 
-public class FuncionarioDTO extends RepresentationModel<FuncionarioDTO>{
-	private Long id_funcionario;
+public class FuncionarioDTO extends RepresentationModel<FuncionarioDTO> {
+
+	private Long id;
 	private Filial filial;
-	private String nm_funcionario;
-	private String nm_email_corporativo;
-	private String nm_senha;
-	private String nm_cargo;
-	 
-	public FuncionarioDTO () {}
+	private String nome;
+	private String emailCorporativo;
+	private String senhaHash;
+	private String cargo;
 
-	public FuncionarioDTO(Long id_funcionario, Filial filial, String nm_funcionario, String nm_email_corporativo,
-			String nm_senha, String nm_cargo) {
+	public FuncionarioDTO() {}
+
+	public FuncionarioDTO(Long id, Filial filial, String nome, String emailCorporativo,
+						  String senhaHash, String cargo) {
 		super();
-		this.id_funcionario = id_funcionario;
+		this.id = id;
 		this.filial = filial;
-		this.nm_funcionario = nm_funcionario;
-		this.nm_email_corporativo = nm_email_corporativo;
-		this.nm_senha = nm_senha;
-		this.nm_cargo = nm_cargo;
-	}
-	
-	public FuncionarioDTO (Funcionario funcionario) {
-		setId_funcionario(funcionario.getId_funcionario());
-		setFilial(funcionario.getFilial());
-		setNm_funcionario(funcionario.getNm_funcionario());
-		setNm_email_corporativo(funcionario.getNm_email_corporativo());
-		setNm_senha(funcionario.getNm_senha());
-		setNm_cargo(funcionario.getNm_cargo());
+		this.nome = nome;
+		this.emailCorporativo = emailCorporativo;
+		this.senhaHash = senhaHash;
+		this.cargo = cargo;
 	}
 
-	public Long getId_funcionario() {
-		return id_funcionario;
+	public FuncionarioDTO(Funcionario funcionario) {
+		this.id = funcionario.getId();
+		this.nome = funcionario.getNome();
+		this.emailCorporativo = funcionario.getEmailCorporativo();
+		this.senhaHash = funcionario.getSenhaHash();
+		this.cargo = funcionario.getCargo();
 	}
 
-	public void setId_funcionario(Long id_funcionario) {
-		this.id_funcionario = id_funcionario;
+	// Getters e Setters
+	public Long getId() {
+		return id;
 	}
 
-	public Filial getFilial() {
-		return filial;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setFilial(Filial filial) {
-		this.filial = filial;
+
+
+	public String getNome() {
+		return nome;
 	}
 
-	public String getNm_funcionario() {
-		return nm_funcionario;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public void setNm_funcionario(String nm_funcionario) {
-		this.nm_funcionario = nm_funcionario;
+	public String getEmailCorporativo() {
+		return emailCorporativo;
 	}
 
-	public String getNm_email_corporativo() {
-		return nm_email_corporativo;
+	public void setEmailCorporativo(String emailCorporativo) {
+		this.emailCorporativo = emailCorporativo;
 	}
 
-	public void setNm_email_corporativo(String nm_email_corporativo) {
-		this.nm_email_corporativo = nm_email_corporativo;
+	public String getSenhaHash() {
+		return senhaHash;
 	}
 
-	public String getNm_senha() {
-		return nm_senha;
+	public void setSenhaHash(String senhaHash) {
+		this.senhaHash = senhaHash;
 	}
 
-	public void setNm_senha(String nm_senha) {
-		this.nm_senha = nm_senha;
+	public String getCargo() {
+		return cargo;
 	}
 
-	public String getNm_cargo() {
-		return nm_cargo;
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
 	}
-
-	public void setNm_cargo(String nm_cargo) {
-		this.nm_cargo = nm_cargo;
-	}
-	
-	
 }

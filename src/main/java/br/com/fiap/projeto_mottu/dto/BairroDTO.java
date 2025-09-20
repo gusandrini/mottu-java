@@ -7,7 +7,7 @@ public class BairroDTO {
 	private Long id_bairro;
 	private Cidade cidade;
 	private String nm_bairro;
-	
+
 	public BairroDTO() {}
 
 	public BairroDTO(Long id_bairro, Cidade cidade, String nm_bairro) {
@@ -16,7 +16,7 @@ public class BairroDTO {
 		this.cidade = cidade;
 		this.nm_bairro = nm_bairro;
 	}
-	
+
 	public BairroDTO(Bairro bairro) {
 		setId_bairro(bairro.getId_bairro());
 		setCidade(bairro.getCidade());
@@ -46,6 +46,7 @@ public class BairroDTO {
 	public void setNm_bairro(String nm_bairro) {
 		this.nm_bairro = nm_bairro;
 	}
-	
-	
+
+
+
 }
