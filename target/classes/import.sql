@@ -82,9 +82,22 @@ INSERT INTO manutencao (id_moto, dt_entrada, dt_saida, ds_manutencao) VALUES (3,
 INSERT INTO manutencao (id_moto, dt_entrada, dt_saida, ds_manutencao) VALUES (4, '2024-04-12', '2024-04-14', 'Alinhamento e balanceamento');
 INSERT INTO manutencao (id_moto, dt_entrada, dt_saida, ds_manutencao) VALUES (5, '2024-05-01', NULL, 'Troca de pastilha de freio');
 
--- Funcionario (ajustado para "filial_id")
-INSERT INTO funcionario (nm_funcionario, nm_email_corporativo, nm_senha, nm_cargo, filial_id) VALUES ('José Almeida', 'jose@empresa.com', 'senha123', 'Gerente', 1);
-INSERT INTO funcionario (nm_funcionario, nm_email_corporativo, nm_senha, nm_cargo, filial_id) VALUES ('Paula Fernandes', 'paula@empresa.com', 'senha456', 'Analista', 2);
-INSERT INTO funcionario (nm_funcionario, nm_email_corporativo, nm_senha, nm_cargo, filial_id) VALUES ('Rafael Santos', 'rafael@empresa.com', 'senha789', 'Técnico', 3);
-INSERT INTO funcionario (nm_funcionario, nm_email_corporativo, nm_senha, nm_cargo, filial_id) VALUES ('Fernanda Lima', 'fernanda@empresa.com', 'senhaabc', 'Auxiliar', 4);
-INSERT INTO funcionario (nm_funcionario, nm_email_corporativo, nm_senha, nm_cargo, filial_id) VALUES ('Lucas Martins', 'lucas@empresa.com', 'senhadef', 'Supervisor', 5);
+-- Funcionario
+INSERT INTO funcionario (nm_funcionario, nm_email_corporativo, nm_senha, nm_cargo, id_filial)
+VALUES ('Carlos Silva', 'carlos.silva@empresa.com', '$2a$10$Dow1Zz92H1x4Myqx1zUCeO7rCV5j3c7r.YZozwOKpYF7M4v8Axq.G', 'GERENTE', 1);
+
+INSERT INTO funcionario (nm_funcionario, nm_email_corporativo, nm_senha, nm_cargo, id_filial)
+VALUES ('Fernanda Costa', 'fernanda.costa@empresa.com', '$2a$10$Dow1Zz92H1x4Myqx1zUCeO7rCV5j3c7r.YZozwOKpYF7M4v8Axq.G', 'ANALISTA', 2);
+
+INSERT INTO funcionario (nm_funcionario, nm_email_corporativo, nm_senha, nm_cargo, id_filial)
+VALUES ('João Pereira', 'joao.pereira@empresa.com', '$2a$10$Dow1Zz92H1x4Myqx1zUCeO7rCV5j3c7r.YZozwOKpYF7M4v8Axq.G', 'ADMIN', 3);
+
+INSERT INTO funcionario (nm_funcionario, nm_email_corporativo, nm_senha, nm_cargo, id_filial)
+VALUES ('Mariana Oliveira', 'mariana.oliveira@empresa.com', '$2a$10$Dow1Zz92H1x4Myqx1zUCeO7rCV5j3c7r.YZozwOKpYF7M4v8Axq.G', 'SUPORTE', 4);
+
+INSERT INTO funcionario (nm_funcionario, nm_email_corporativo, nm_senha, nm_cargo, id_filial)
+VALUES ('Roberto Souza', 'roberto.souza@empresa.com', '$2a$10$Dow1Zz92H1x4Myqx1zUCeO7rCV5j3c7r.YZozwOKpYF7M4v8Axq.G', 'FINANCEIRO', 5);
+
+
+
+

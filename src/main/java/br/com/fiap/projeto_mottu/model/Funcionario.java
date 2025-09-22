@@ -35,7 +35,13 @@ public class Funcionario {
     @Column(name = "nm_cargo", nullable = false)
     private String cargo;
 
+    @ManyToOne
+    @JoinColumn(name = "id_filial")
+    private Filial filial;
+
     // Getters e Setters corretos
+    public Filial getFilial() { return filial; }
+    public void setFilial(Filial filial) { this.filial = filial; }
 
     public Long getId() {
         return id;
