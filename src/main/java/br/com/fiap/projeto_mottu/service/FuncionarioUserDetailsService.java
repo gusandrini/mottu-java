@@ -1,7 +1,7 @@
 package br.com.fiap.projeto_mottu.service;
 
-import java.util.List;
-
+import br.com.fiap.projeto_mottu.model.Funcionario;
+import br.com.fiap.projeto_mottu.repository.FuncionarioRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,11 +9,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import br.com.fiap.projeto_mottu.model.Funcionario;
-import br.com.fiap.projeto_mottu.repository.FuncionarioRepository;
+import java.util.List;
 
 @Service
 public class FuncionarioUserDetailsService implements UserDetailsService {
+
     private final FuncionarioRepository repo;
 
     public FuncionarioUserDetailsService(FuncionarioRepository repo) {
@@ -25,11 +25,10 @@ public class FuncionarioUserDetailsService implements UserDetailsService {
         Funcionario f = repo.findByEmailCorporativo(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Funcionário não encontrado"));
 
-        String role = "ROLE_USER";
-        if (f.getCargo() != null && f.getCargo().trim().equalsIgnoreCase("ADMIN")) {
-            role = "ROLE_ADMIN";
-        }
-        return new User(f.getEmailCorporativo(), f.getSenhaHash(),
-                List.of(new SimpleGrantedAuthority(role)));
+        return new User(
+                f.getEmailCorporativo(),
+                f.getSenhaHash(), // BCrypt
+                List.of(new SimpleGrantedAuthority("ROLE_" + f.getCargo().toUpperCase()))
+        );
     }
 }
