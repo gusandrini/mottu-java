@@ -23,8 +23,7 @@ public class Cliente {
 	private Long id_cliente;
 
 	@OneToOne
-	@JoinColumn(name = "id_logradouro", nullable = false)
-	@NotNull(message = "Logradouro é obrigatório")
+	@JoinColumn(name = "id_logradouro") // 🔹 por padrão já permite null
 	private Logradouro logradouro;
 
 	@NotEmpty(message = "O nome do cliente deve ser informado!")

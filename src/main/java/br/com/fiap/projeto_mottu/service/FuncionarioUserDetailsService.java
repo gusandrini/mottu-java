@@ -25,10 +25,16 @@ public class FuncionarioUserDetailsService implements UserDetailsService {
         Funcionario f = repo.findByEmailCorporativo(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Funcionário não encontrado"));
 
+        String role = "ROLE_USER"; // 🔹 padrão
+        if (f.getCargo() != null && !f.getCargo().isBlank()) {
+            role = "ROLE_" + f.getCargo().toUpperCase();
+        }
+
         return new User(
                 f.getEmailCorporativo(),
                 f.getSenhaHash(), // BCrypt
-                List.of(new SimpleGrantedAuthority("ROLE_" + f.getCargo().toUpperCase()))
+                List.of(new SimpleGrantedAuthority(role))
         );
     }
+
 }

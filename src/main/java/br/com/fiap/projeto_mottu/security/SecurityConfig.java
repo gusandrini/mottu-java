@@ -28,19 +28,27 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .headers(headers -> headers.frameOptions(frame -> frame.disable())) // ✅ liberar uso de frames (H2 usa iframe)
+                .headers(headers -> headers.frameOptions(frame -> frame.disable())) // ✅ liberar H2-console
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        // 🔹 endpoints públicos
                         .requestMatchers(
                                 "/auth/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/actuator/health",
-                                "/h2-console/**" // ✅ liberar console do H2
+                                "/h2-console/**"
                         ).permitAll()
+
+                        // 🔹 qualquer funcionário autenticado pode usar todo o CRUD
+                        .requestMatchers("/clientes/**").authenticated()
+                        .requestMatchers("/funcionarios/**").authenticated()
+
+                        // 🔹 qualquer outra rota também exige login
                         .anyRequest().authenticated()
                 )
+                // Filtro JWT antes do UsernamePasswordAuthenticationFilter
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
