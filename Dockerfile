@@ -4,8 +4,8 @@ WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-# Etapa de runtime (usa apenas JRE 17, mais leve)
-FROM eclipse-temurin:17-jre
+# Etapa de runtime (usa JDK 17 oficial)
+FROM eclipse-temurin:17
 RUN adduser --home /home/gustavo --shell /bin/sh --disabled-password gustavo
 WORKDIR /home/gustavo
 COPY --from=builder /app/target/*.jar app.jar
