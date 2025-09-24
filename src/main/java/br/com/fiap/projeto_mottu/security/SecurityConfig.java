@@ -38,14 +38,13 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/actuator/health",
-                                "/h2-console/**"
+                                "/h2-console/**",
+                                "/funcionarios/inserir"
                         ).permitAll()
 
                         // 🔹 qualquer funcionário autenticado pode usar todo o CRUD
                         .requestMatchers("/clientes/**").authenticated()
-                        .requestMatchers("/funcionarios/inserir").permitAll()
                         .requestMatchers("/funcionarios/**").authenticated()
-
 
                         // 🔹 qualquer outra rota também exige login
                         .anyRequest().authenticated()
