@@ -43,7 +43,9 @@ public class SecurityConfig {
 
                         // 🔹 qualquer funcionário autenticado pode usar todo o CRUD
                         .requestMatchers("/clientes/**").authenticated()
+                        .requestMatchers("/funcionarios/inserir").permitAll()
                         .requestMatchers("/funcionarios/**").authenticated()
+
 
                         // 🔹 qualquer outra rota também exige login
                         .anyRequest().authenticated()
